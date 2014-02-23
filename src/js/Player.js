@@ -2,8 +2,8 @@ var Player = function(xPosition, yPosition){
 	this.x = xPosition;
 	this.y = yPosition;
 	//constant values, arbitrary for now
-	this.width = 50;
-	this.height = 100;
+	this.width = 25;
+	this.height = 50;
 	this.isJumping = false;
 
 	this.jump = function(){

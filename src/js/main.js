@@ -18,6 +18,7 @@ function init() {
 }
 
 function update(){
+	ctx.clearRect(0, 0, canvas.width, canvas.height);
 	scene1.update(ctx);
-	//scene2.update(ctx);
+	scene2.update(ctx);
 }
