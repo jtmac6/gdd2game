@@ -8,7 +8,8 @@ var Obstacle = function(xPosition, yPosition, width, height, breakable){
 	//be very clear on what is breakable
 	this.color = breakable ? "red" : "yellow";
 
-	function draw(){
-
+	this.draw = function(ctx){
+		ctx.fillStyle = this.color;
+		ctx.fillRect(this.x, this.y, this.width, this.height);
 	}
 }

@@ -1,31 +1,32 @@
-var Player = function(xPosition, yPosition, screenNumber){
+var Player = function(xPosition, yPosition){
 	this.x = xPosition;
 	this.y = yPosition;
-	this.screenNumber = screenNumber;
 	//constant values, arbitrary for now
 	this.width = 50;
 	this.height = 100;
 	this.isJumping = false;
 
-	function jump(){
+	this.jump = function(){
 
 	}
-	function moveUp(){
+	this.moveUp = function(){
 
 	}
-	function moveDown(){
+	this.moveDown = function(){
 
 	}
-	function moveLeft(){
+	this.moveLeft = function(){
 
 	}
-	function moveRight(){
+	this.moveRight = function(){
 
 	}
-	function handleInput(){
+	this.handleInput = function(){
 		
 	}
-	function draw(){
-
+	this.draw = function(ctx){
+		//constant color, can change
+		ctx.fillStyle = "blue";
+		ctx.fillRect(this.x, this.y, this.width, this.height);
 	}
 }
