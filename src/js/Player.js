@@ -10,16 +10,16 @@ var Player = function(xPosition, yPosition){
 
 	}
 	this.moveUp = function(){
-
+        //WE DUN NEED DIS
 	}
 	this.moveDown = function(){
-
+        //OR DIS
 	}
 	this.moveLeft = function(){
-
+        //AND PROBABLY DIS
 	}
 	this.moveRight = function(){
-
+        //DIS ONE TOO
 	}
 	this.handleInput = function(){
 		
