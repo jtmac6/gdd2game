@@ -1,7 +1,7 @@
 var Scene = function(sceneNum){
 	this.sceneNum = sceneNum;
 	this.gameEntities = [];
-	this.player = new Player(50,sceneNum == 1 ? 50 : window.innerHeight / 3 + 50);
+	this.player = new Player(50,this.sceneNum == 1 ? 50 : window.innerHeight / 3 + 50, this.sceneNum == 1 ? 'assets/PlayerBlue.png' : 'assets/PlayerRed.png');
 	this.speed = 100;
 	this.timePassed = 0;
 	this.objectGenerationTick = 0;
@@ -44,7 +44,7 @@ var Scene = function(sceneNum){
 	this.generateNewObjects = function(){
 		this.objectGenerationTick += milis;
 		if( this.objectGenerationTick > 2000 ) {
-			this.gameEntities.push( new Obstacle( 1000, 20 + ( 50 * this.sceneNum ), 20, 30, false ) );
+			this.gameEntities.push( new Obstacle( 1000, 20 + ( 50 * this.sceneNum ), 20, 30, this.sceneNum == 1 ? 'assets/BlockBlue.png' : 'assets/BlockRed.png', false ) );
 			this.objectGenerationTick = 0;
 		}
 	}
