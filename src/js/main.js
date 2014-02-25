@@ -3,6 +3,8 @@ window.onload = init;
 var scene1;
 var scene2;
 var ctx;
+var milis = 60;
+
 function init() {
 	// Grab our canvas.
 	var canvas = document.getElementById('canvas');
@@ -12,7 +14,7 @@ function init() {
 	// Make the canvas fullscreen
 	canvas.width = window.innerWidth;
 	canvas.height = window.innerHeight;
-	window.setInterval(update, 60);
+	window.setInterval(update, milis);
 	
 	// We'll need to listen for when the page is resized and adjust accordingly.
 }
