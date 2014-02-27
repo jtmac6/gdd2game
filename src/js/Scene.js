@@ -46,7 +46,7 @@ var Scene = function(sceneNum, scene_pos_x, scene_pos_y){
 	this.moveObstacles = function(){
         for( var i = this.gameEntities.length - 1; i >= 0; i-- ) {
 			this.gameEntities[i].x -= ( milis / 1000 ) * this.speed;
-			if( this.gameEntities[i].x < 0 + this.gameEntities[i].width ) {
+			if( this.gameEntities[i].x < this.scene_x - this.gameEntities[i].width / 2 ) {
 				this.gameEntities.splice( i, 1 );
 			}
         }
