@@ -9,8 +9,8 @@ function init() {
 	// Grab our canvas.
 	var canvas = document.getElementById('canvas');
 	ctx = canvas.getContext('2d');
-	scene1 = new Scene(1,10, 10);
-	scene2 = new Scene(2,10, window.innerHeight / 3 + 20);
+	scene1 = new Scene(1,10, 10, 1800, 300);
+	scene2 = new Scene(2,10, 320, 1800, 300 );
 	// Make the canvas fullscreen
 	canvas.width = window.innerWidth;
 	canvas.height = window.innerHeight;

@@ -1,15 +1,15 @@
-var Scene = function(sceneNum, scene_pos_x, scene_pos_y){
+var Scene = function(sceneNum, scene_pos_x, scene_pos_y, scene_width, scene_height){
 	this.sceneNum = sceneNum;
-	this.gameEntities = [];
-	this.player = new Player(50,this.sceneNum == 1 ? 50 : window.innerHeight / 3 + 50, this.sceneNum == 1 ? 'assets/PlayerBlue.png' : 'assets/PlayerRed.png');
+	this.gameEntities = [];	
 	this.speed = 100;
 	this.timePassed = 0;
 	this.objectGenerationTick = 0;
 	this.scene_y = scene_pos_y;
 	this.scene_x = scene_pos_x;
-	this.scene_height = 300;
-	this.scene_width = window.innerWidth - 20;
+	this.scene_width = scene_width;
+	this.scene_height = scene_height;
 	this.gravity = 5;
+	this.player = new Player(50,this.scene_y + this.scene_height - 50, this.sceneNum == 1 ? 'assets/PlayerBlue.png' : 'assets/PlayerRed.png');
 	
 	//initializes the starting state of the game
 	this.init = function(){
@@ -46,7 +46,7 @@ var Scene = function(sceneNum, scene_pos_x, scene_pos_y){
 	this.generateNewObjects = function(){
 		this.objectGenerationTick += milis;
 		if( this.objectGenerationTick > 2000 ) {
-			this.gameEntities.push( new Obstacle( 1000, 20 + ( 50 * this.sceneNum ), 20, 30, this.sceneNum == 1 ? 'assets/BlockBlue.png' : 'assets/BlockRed.png', false ) );
+			this.gameEntities.push( new Obstacle( 1000, this.scene_y + this.scene_height - 30, 20, 30, this.sceneNum != 1 ? 'assets/BlockBlue.png' : 'assets/BlockRed.png', false ) );
 			this.objectGenerationTick = 0;
 		}
 	}
@@ -81,8 +81,10 @@ var Scene = function(sceneNum, scene_pos_x, scene_pos_y){
 	//updates the game to the next state
 	this.update = function(ctx){
 		this.timePassed += milis;
-		if(this.player.y != this.scene_y + this.scene_height - this.player.height){
-			this.player.y += this.gravity;
+		this.player.y += this.gravity;
+		if( ( this.player.y + this.player.height ) > ( this.scene_y + this.scene_height ) )
+		{
+			this.player.y = this.scene_y + this.scene_height - this.player.height;
 		}
 		this.draw(ctx);
 		this.moveObstacles();
