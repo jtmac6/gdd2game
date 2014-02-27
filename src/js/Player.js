@@ -10,16 +10,15 @@ var Player = function(xPosition, yPosition, source){
 	this.jumpheight = 1;
 
 	this.jump = function(){
-		
 		if(!this.isJumping){
 			this.isJumping = true;
+			this.y -= 50;
 			setTimeout(this.land, 500);
 		}
 	}
 	
 	this.land = function(){
-		this.isJumping = false;
-		console.log("jump should be false");
+		isJumping = false;
 	}
 	
 	this.moveUp = function(){
