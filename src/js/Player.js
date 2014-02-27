@@ -2,8 +2,8 @@ var Player = function(xPosition, yPosition, source){
 	this.x = xPosition;
 	this.y = yPosition;
 	//constant values, arbitrary for now
-	this.width = 25;
-	this.height = 50;
+	this.width = 32;
+	this.height = 64;
 	this.img = new Image();
 	this.img.src = source;
 	this.isJumping = false;
