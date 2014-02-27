@@ -11,6 +11,15 @@ var Scene = function(sceneNum, scene_pos_x, scene_pos_y, scene_width, scene_heig
 	this.gravity = 5;
 	this.player = new Player(50,this.scene_y + this.scene_height - 50, this.sceneNum == 1 ? 'assets/PlayerBlue.png' : 'assets/PlayerRed.png');
 	
+	document.addEventListener('keydown', function(event){
+	console.log(event.keyCode);
+		if(event.keyCode == 87) scene1.player.jump();
+		if(event.keyCode == 65) scene1.player.moveLeft();
+		if(event.keyCode == 68) scene1.player.moveRight();
+		if(event.keyCode == 39) scene2.player.moveRight();
+		if(event.keyCode == 37) scene2.player.moveLeft();
+	});
+	
 	//initializes the starting state of the game
 	this.init = function(){
 

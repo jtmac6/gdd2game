@@ -24,15 +24,18 @@ var Player = function(xPosition, yPosition, source){
 	
 	this.moveUp = function(){
         //WE DUN NEED DIS
+		
 	}
 	this.moveDown = function(){
         //OR DIS
 	}
 	this.moveLeft = function(){
         //AND PROBABLY DIS
+		this.x -= 1;
 	}
 	this.moveRight = function(){
         //DIS ONE TOO
+		this.x += 1;
 	}
 	this.handleInput = function(){
 		
