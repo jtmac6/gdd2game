@@ -12,14 +12,7 @@ var Player = function(xPosition, yPosition, source){
 
 	this.jump = function(){
 		
-		if(!this.isJumping){
-			this.isJumping = true;
-			setTimeout(this.land, 500);
-		}
-	}
-	
-	this.land = function(){
-		this.isJumping = false;
+		this.yvelocity = 10;
 	}
 	
 	this.moveUp = function(){
@@ -43,10 +36,6 @@ var Player = function(xPosition, yPosition, source){
 	this.draw = function(ctx){
 		//constant color, can change
 		ctx.fillStyle = "blue";
-		
-		if(this.isJumping){
-			this.y -= this.jumpheight;
-		}
 		
 		ctx.drawImage( this.img, this.x, this.y, this.width, this.height );
 		//ctx.fillRect(this.x, this.y, this.width, this.height);

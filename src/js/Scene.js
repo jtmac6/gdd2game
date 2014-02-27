@@ -8,7 +8,7 @@ var Scene = function(sceneNum, scene_pos_x, scene_pos_y, scene_width, scene_heig
 	this.scene_x = scene_pos_x;
 	this.scene_width = scene_width;
 	this.scene_height = scene_height;
-	this.gravity = 5;
+	this.gravity = 2;
 	this.player = new Player(50,this.scene_y + this.scene_height - 50, this.sceneNum == 1 ? 'assets/PlayerBlue.png' : 'assets/PlayerRed.png');
 	
 	document.addEventListener('keydown', function(event){
@@ -18,6 +18,7 @@ var Scene = function(sceneNum, scene_pos_x, scene_pos_y, scene_width, scene_heig
 		if(event.keyCode == 68) scene1.player.moveRight();
 		if(event.keyCode == 39) scene2.player.moveRight();
 		if(event.keyCode == 37) scene2.player.moveLeft();
+		//if(event.keyCode == 
 	});
 	
 	//initializes the starting state of the game
@@ -90,7 +91,8 @@ var Scene = function(sceneNum, scene_pos_x, scene_pos_y, scene_width, scene_heig
 	//updates the game to the next state
 	this.update = function(ctx){
 		this.timePassed += milis;
-		this.player.y += this.gravity;
+		this.player.yvelocity -= this.gravity;
+		this.player.y -= this.player.yvelocity;
 		if( ( this.player.y + this.player.height ) > ( this.scene_y + this.scene_height ) )
 		{
 			this.player.y = this.scene_y + this.scene_height - this.player.height;
