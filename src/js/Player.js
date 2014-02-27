@@ -12,7 +12,11 @@ var Player = function(xPosition, yPosition, source){
 
 	this.jump = function(){
 		
-		this.yvelocity = 10;
+		if( !this.isJumping )
+		{
+			this.yvelocity = 20;
+			this.isJumping = true;
+		}
 	}
 	
 	this.moveUp = function(){
