@@ -7,9 +7,18 @@ var Scene = function(sceneNum, scene_pos_x, scene_pos_y){
 	this.objectGenerationTick = 0;
 	this.scene_y = scene_pos_y;
 	this.scene_x = scene_pos_x;
-	this.scene_height = 300;
+	this.scene_height = 200;
 	this.scene_width = window.innerWidth - 20;
 	this.gravity = 5;
+	
+	document.addEventListener('keydown', function(event){
+	console.log(event.keyCode);
+		if(event.keyCode == 87) scene1.player.jump();
+		if(event.keyCode == 65) scene1.player.moveLeft();
+		if(event.keyCode == 68) scene1.player.moveRight();
+		if(event.keyCode == 39) scene2.player.moveRight();
+		if(event.keyCode == 37) scene2.player.moveLeft();
+	});
 	
 	//initializes the starting state of the game
 	this.init = function(){
