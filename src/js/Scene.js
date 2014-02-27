@@ -18,7 +18,7 @@ var Scene = function(sceneNum, scene_pos_x, scene_pos_y, scene_width, scene_heig
 		if(event.keyCode == 68) scene1.player.moveRight();
 		if(event.keyCode == 39) scene2.player.moveRight();
 		if(event.keyCode == 37) scene2.player.moveLeft();
-		//if(event.keyCode == 
+		if(event.keyCode == 38) scene2.player.jump(); 
 	});
 	
 	//initializes the starting state of the game
