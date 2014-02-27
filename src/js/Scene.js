@@ -94,6 +94,7 @@ var Scene = function(sceneNum, scene_pos_x, scene_pos_y, scene_width, scene_heig
 		if( ( this.player.y + this.player.height ) > ( this.scene_y + this.scene_height ) )
 		{
 			this.player.y = this.scene_y + this.scene_height - this.player.height;
+			this.player.yvelocity = 0;
 		}
 		this.draw(ctx);
 		this.moveObstacles();

@@ -6,6 +6,7 @@ var Player = function(xPosition, yPosition, source){
 	this.height = 50;
 	this.img = new Image();
 	this.img.src = source;
+	this.yvelocity = 0;
 	this.isJumping = false;
 	this.jumpheight = 1;
 
@@ -19,7 +20,6 @@ var Player = function(xPosition, yPosition, source){
 	
 	this.land = function(){
 		this.isJumping = false;
-		console.log("jump should be false");
 	}
 	
 	this.moveUp = function(){
