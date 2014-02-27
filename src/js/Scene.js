@@ -1,10 +1,15 @@
-var Scene = function(sceneNum){
+var Scene = function(sceneNum, scene_pos_x, scene_pos_y){
 	this.sceneNum = sceneNum;
 	this.gameEntities = [];
 	this.player = new Player(50,this.sceneNum == 1 ? 50 : window.innerHeight / 3 + 50, this.sceneNum == 1 ? 'assets/PlayerBlue.png' : 'assets/PlayerRed.png');
 	this.speed = 100;
 	this.timePassed = 0;
 	this.objectGenerationTick = 0;
+	this.scene_y = scene_pos_y;
+	this.scene_x = scene_pos_x;
+	this.scene_height = 300;
+	this.scene_width = window.innerWidth - 20;
+	this.gravity = 5;
 	
 	//initializes the starting state of the game
 	this.init = function(){
@@ -15,12 +20,9 @@ var Scene = function(sceneNum){
 		//draw the screen itself
 		ctx.strokeWidth = 5;
 		ctx.fillStyle = "green";
-		if(sceneNum == 1){
-			ctx.strokeRect(10,10,window.innerWidth - 20, window.innerHeight / 3);
-		}
-		else{
-			ctx.strokeRect(10,window.innerHeight / 3 + 20,window.innerWidth - 20, window.innerHeight / 3);
-		}
+		
+		ctx.strokeRect(this.scene_x,this.scene_y, this.scene_width, this.scene_height);
+		
 		//draw entities
 		this.player.draw(ctx);
 		for (var i = this.gameEntities.length - 1; i >= 0; i--) {
@@ -79,6 +81,9 @@ var Scene = function(sceneNum){
 	//updates the game to the next state
 	this.update = function(ctx){
 		this.timePassed += milis;
+		if(this.player.y != this.scene_y + this.scene_height - this.player.height){
+			this.player.y += this.gravity;
+		}
 		this.draw(ctx);
 		this.moveObstacles();
 		this.generateNewObjects();

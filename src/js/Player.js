@@ -7,10 +7,21 @@ var Player = function(xPosition, yPosition, source){
 	this.img = new Image();
 	this.img.src = source;
 	this.isJumping = false;
+	this.jumpheight = 1;
 
 	this.jump = function(){
-
+		
+		if(!this.isJumping){
+			this.isJumping = true;
+			setTimeout(this.land, 500);
+		}
 	}
+	
+	this.land = function(){
+		this.isJumping = false;
+		console.log("jump should be false");
+	}
+	
 	this.moveUp = function(){
         //WE DUN NEED DIS
 	}
@@ -29,6 +40,11 @@ var Player = function(xPosition, yPosition, source){
 	this.draw = function(ctx){
 		//constant color, can change
 		ctx.fillStyle = "blue";
+		
+		if(this.isJumping){
+			this.y -= this.jumpheight;
+		}
+		
 		ctx.drawImage( this.img, this.x, this.y, this.width, this.height );
 		//ctx.fillRect(this.x, this.y, this.width, this.height);
 	}
