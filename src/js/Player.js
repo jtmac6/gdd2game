@@ -15,19 +15,26 @@ var Player = function(xPosition, yPosition, source){
 		
 		if( !this.isJumping )
 		{
-			this.yvelocity = 20;
+			this.yvelocity = 10;
 			this.isJumping = true;
 			//get the time the player begins to jump.
 			this.jumpStartTime = new Date().getTime();
 		}
 		//high jumping
 		var timeDif = Math.abs(this.jumpStartTime - new Date().getTime());
-		if( this.yvelocity > 0 && timeDif < 100)
+		if( this.yvelocity > 0 && timeDif < 300 && timeDif > 60)
 		{
-			console.log(1 * (100 / timeDif));
 			if(timeDif != 0)
-				this.yvelocity += 1.3 * (100 / timeDif);
+				this.yvelocity += .04 * (300 - timeDif);
 		}
+	}
+	//causes the player to slide forward
+	this.slide = function(){
+
+	}
+	//causes the player to use his item
+	this.useItem = function(){
+
 	}
 	this.handleInput = function(){
 		

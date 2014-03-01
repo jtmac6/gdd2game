@@ -14,28 +14,54 @@ function init() {
 	// Make the canvas fullscreen
 	canvas.width = window.innerWidth;
 	canvas.height = window.innerHeight;
-	
 	document.addEventListener('keydown', function(event) {
+			// player 1 jump
 			if(event.keyCode == 90) {
-				scene1.player.jump();
 				//alert('z was pressed');
+				scene1.pushInput("jump");
 			}
+			//player 1 use item
 			if(event.keyCode == 88) {
 				//use item
+				scene1.pushInput("item");
 				//alert('x was pressed');
 			}
-			
+			//player 2 jump
 			if(event.keyCode == 97) {
-				scene2.player.jump();
+				scene2.pushInput("jump");
 				//alert('x was pressed');
 			}
-			
+			//player 2 use item
 			if(event.keyCode == 98) {
 				//use item
+				scene2.pushInput("item");
 				//alert('x was pressed');
 			}
 	});
-	
+	document.addEventListener('keyup', function(event){
+		// player 1 jump
+			if(event.keyCode == 90) {
+				//alert('z was pressed');
+				scene1.popInput("jump");
+			}
+			//player 1 use item
+			if(event.keyCode == 88) {
+				//use item
+				scene1.popInput("item");
+				//alert('x was pressed');
+			}
+			//player 2 jump
+			if(event.keyCode == 97) {
+				scene2.popInput("jump");
+				//alert('x was pressed');
+			}
+			//player 2 use item
+			if(event.keyCode == 98) {
+				//use item
+				scene2.popInput("item");
+				//alert('x was pressed');
+			}
+	});
 	window.setInterval(update, milis);
 	
 

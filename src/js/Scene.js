@@ -10,7 +10,7 @@ var Scene = function(sceneNum, scene_pos_x, scene_pos_y, scene_width, scene_heig
 	this.scene_height = scene_height;
 	this.gravity = 3;
 	this.player = new Player(250,this.scene_y + this.scene_height - 50, this.sceneNum == 1 ? 'assets/PlayerBlue.png' : 'assets/PlayerRed.png');
-	
+	this.inputBuffer = {"jump": false, "item":false, "slide": false};
 	/*
 	Prototyping Code
 	document.addEventListener('keydown', function(event){
@@ -27,6 +27,21 @@ var Scene = function(sceneNum, scene_pos_x, scene_pos_y, scene_width, scene_heig
 	//initializes the starting state of the game
 	this.init = function(){
 
+	}
+	//pushes a keyboard input to the scene's input buffer
+	this.pushInput = function(input){
+		if(input in this.inputBuffer)
+			this.inputBuffer[input] = true;
+	}
+	this.popInput = function(input){
+		if(input in this.inputBuffer)
+			this.inputBuffer[input] = false;
+	}
+	//simply informs the player which actions it should be taking
+	this.callPlayerActions = function(){
+		if(this.inputBuffer["jump"]) this.player.jump();
+		if(this.inputBuffer["slide"]) this.player.crouch();
+		if(this.inputBuffer["item"]) this.player.useItem();
 	}
 	//calls the draw of each entity in the scene
 	this.draw = function(ctx){
@@ -94,6 +109,8 @@ var Scene = function(sceneNum, scene_pos_x, scene_pos_y, scene_width, scene_heig
 	//updates the game to the next state
 	this.update = function(ctx){
 		this.timePassed += milis;
+		//tell the player what to do
+		this.callPlayerActions();
 		this.player.yvelocity -= this.gravity;
 		this.player.y -= this.player.yvelocity;
 		if( ( this.player.y + this.player.height ) > ( this.scene_y + this.scene_height ) )
