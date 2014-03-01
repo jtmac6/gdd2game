@@ -9,8 +9,10 @@ var Scene = function(sceneNum, scene_pos_x, scene_pos_y, scene_width, scene_heig
 	this.scene_width = scene_width;
 	this.scene_height = scene_height;
 	this.gravity = 3;
-	this.player = new Player(50,this.scene_y + this.scene_height - 50, this.sceneNum == 1 ? 'assets/PlayerBlue.png' : 'assets/PlayerRed.png');
+	this.player = new Player(250,this.scene_y + this.scene_height - 50, this.sceneNum == 1 ? 'assets/PlayerBlue.png' : 'assets/PlayerRed.png');
 	
+	/*
+	Prototyping Code
 	document.addEventListener('keydown', function(event){
 	console.log(event.keyCode);
 		if(event.keyCode == 87) scene1.player.jump();
@@ -20,7 +22,8 @@ var Scene = function(sceneNum, scene_pos_x, scene_pos_y, scene_width, scene_heig
 		if(event.keyCode == 37) scene2.player.moveLeft();
 		if(event.keyCode == 38) scene2.player.jump();
 	});
-	
+	*/
+
 	//initializes the starting state of the game
 	this.init = function(){
 
@@ -98,6 +101,7 @@ var Scene = function(sceneNum, scene_pos_x, scene_pos_y, scene_width, scene_heig
 			this.player.y = this.scene_y + this.scene_height - this.player.height;
 			this.player.yvelocity = 0;
 			this.player.isJumping = false;
+			this.player.isHighJumping = false;
 		}
 		this.draw(ctx);
 		this.moveObstacles();

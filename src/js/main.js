@@ -20,17 +20,17 @@ function init() {
 				scene1.player.jump();
 				//alert('z was pressed');
 			}
-			else if(event.keyCode == 88) {
+			if(event.keyCode == 88) {
 				//use item
 				//alert('x was pressed');
 			}
 			
-			else if(event.keyCode == 97) {
+			if(event.keyCode == 97) {
 				scene2.player.jump();
 				//alert('x was pressed');
 			}
 			
-			else if(event.keyCode == 98) {
+			if(event.keyCode == 98) {
 				//use item
 				//alert('x was pressed');
 			}
