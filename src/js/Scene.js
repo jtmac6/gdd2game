@@ -9,7 +9,8 @@ var Scene = function(sceneNum, scene_pos_x, scene_pos_y, scene_width, scene_heig
 	this.scene_width = scene_width;
 	this.scene_height = scene_height;
 	this.gravity = 3;
-	this.player = new Player(250,this.scene_y + this.scene_height - 50, this.sceneNum == 1 ? 'assets/PlayerBlue.png' : 'assets/PlayerRed.png');
+	this.initialPlayerX = 250;
+	this.player = new Player(this.initialPlayerX,this.scene_y + this.scene_height - 50, this.sceneNum == 1 ? 'assets/PlayerBlue.png' : 'assets/PlayerRed.png');
 	this.inputBuffer = {"jump": false, "item":false, "slide": false};
 	/*
 	Prototyping Code
@@ -99,7 +100,25 @@ var Scene = function(sceneNum, scene_pos_x, scene_pos_y, scene_width, scene_heig
 		* Set a variable to ignore the collision until they are no 
 		* longer colliding with the entity
 		*/
-		console.log("Collision!");
+		//console.log("Collision!");
+		
+		if (true)
+		{
+			// Push the player for now
+			player.x = entity.x-player.width;
+			
+			if (player.isDead())
+			{
+				this.respawn();
+			}
+		}
+	}
+	
+	/**
+	* Respawn the player.
+	**/
+	this.respawn = function() {
+		player.x = this.initialPlayerX;
 	}
 	
 	//checks collisions, also resolves them

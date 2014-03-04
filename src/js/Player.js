@@ -11,6 +11,14 @@ var Player = function(xPosition, yPosition, source){
 	this.isHighJumping = false;
 	this.jumpStartTime = frameCount;
 	this.jumpheight = 1;
+	
+	/**
+	* Is the player dead.
+	* @return If the player is dead.
+	**/
+	this.isDead = function() {
+		return this.x < 0;
+	}
 
 	this.jump = function(){
 		
