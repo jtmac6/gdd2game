@@ -9,23 +9,33 @@ var Player = function(xPosition, yPosition, source){
 	this.yvelocity = 0;
 	this.isJumping = false;
 	this.isHighJumping = false;
-	this.jumpStartTime = new Date().getTime();
+	this.jumpStartTime = frameCount;
 	this.jumpheight = 1;
+	
+	/**
+	* Is the player dead.
+	* @return If the player is dead.
+	**/
+	this.isDead = function() {
+		return this.x < 0;
+	}
+
 	this.jump = function(){
 		
 		if( !this.isJumping )
 		{
-			this.yvelocity = 10;
+			this.yvelocity = 17;
 			this.isJumping = true;
 			//get the time the player begins to jump.
-			this.jumpStartTime = new Date().getTime();
+			this.jumpStartTime = frameCount;
 		}
 		//high jumping
-		var timeDif = Math.abs(this.jumpStartTime - new Date().getTime());
-		if( this.yvelocity > 0 && timeDif < 300 && timeDif > 60)
+		var timeDif = Math.abs(this.jumpStartTime - frameCount);
+		if( this.yvelocity > 0 && timeDif < 6 && timeDif > 1)
 		{
+			console.log(timeDif);
 			if(timeDif != 0)
-				this.yvelocity += .04 * (300 - timeDif);
+				this.yvelocity += .6 * (8 - timeDif);
 		}
 	}
 	//causes the player to slide forward

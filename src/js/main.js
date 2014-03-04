@@ -4,7 +4,7 @@ var scene1;
 var scene2;
 var ctx;
 var milis = 60;
-
+var frameCount = 0;
 function init() {
 	// Grab our canvas.
 	var canvas = document.getElementById('canvas');
@@ -70,6 +70,7 @@ function init() {
 }
 
 function update(){
+	++frameCount;
 	ctx.clearRect(0, 0, canvas.width, canvas.height);
 	scene1.update(ctx);
 	scene2.update(ctx);
