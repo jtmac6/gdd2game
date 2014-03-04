@@ -16,49 +16,102 @@ function init() {
 	canvas.height = window.innerHeight;
 	document.addEventListener('keydown', function(event) {
 			// player 1 jump
-			if(event.keyCode == 90) {
-				//alert('z was pressed');
+			if(event.keyCode == 87) {
+				//alert('w was pressed');
 				scene1.pushInput("jump");
 			}
 			//player 1 use item
-			if(event.keyCode == 88) {
+			if(event.keyCode == 83) {
 				//use item
 				scene1.pushInput("item");
-				//alert('x was pressed');
+				//alert('a was pressed');
 			}
-			//player 2 jump
-			if(event.keyCode == 97) {
-				scene2.pushInput("jump");
-				//alert('x was pressed');
+
+			//player 1 move left
+			if(event.keyCode == 65) {
+				//alert('a was pressed');
+				scene1.pushInput("left");
 			}
-			//player 2 use item
-			if(event.keyCode == 98) {
+			//player 1 move right
+			if(event.keyCode == 68) {
 				//use item
-				scene2.pushInput("item");
+				scene1.pushInput("right");
 				//alert('x was pressed');
 			}
+
+
+			// player 1 jump
+			if(event.keyCode == 38) {
+				//alert('w was pressed');
+				scene1.pushInput("jump");
+			}
+			//player 1 use item
+			if(event.keyCode == 40) {
+				//use item
+				scene1.pushInput("item");
+				//alert('a was pressed');
+			}
+
+			//player 1 move left
+			if(event.keyCode == 37) {
+				//alert('a was pressed');
+				scene1.pushInput("left");
+			}
+			//player 1 move right
+			if(event.keyCode == 39) {
+				//use item
+				scene1.pushInput("right");
+				//alert('x was pressed');
+			}
+
 	});
 	document.addEventListener('keyup', function(event){
 		// player 1 jump
-			if(event.keyCode == 90) {
-				//alert('z was pressed');
+			if(event.keyCode == 87) {
+				//alert('w was pressed');
 				scene1.popInput("jump");
 			}
 			//player 1 use item
-			if(event.keyCode == 88) {
+			if(event.keyCode == 83) {
 				//use item
 				scene1.popInput("item");
-				//alert('x was pressed');
+				//alert('a was pressed');
 			}
-			//player 2 jump
-			if(event.keyCode == 97) {
-				scene2.popInput("jump");
-				//alert('x was pressed');
+
+			//player 1 move left
+			if(event.keyCode == 65) {
+				//alert('a was pressed');
+				scene1.popInput("left");
 			}
-			//player 2 use item
-			if(event.keyCode == 98) {
+			//player 1 move right
+			if(event.keyCode == 68) {
 				//use item
-				scene2.popInput("item");
+				scene1.popInput("right");
+				//alert('x was pressed');
+			}
+
+
+			// player 1 jump
+			if(event.keyCode == 38) {
+				//alert('w was pressed');
+				scene1.popInput("jump");
+			}
+			//player 1 use item
+			if(event.keyCode == 40) {
+				//use item
+				scene1.popInput("item");
+				//alert('a was pressed');
+			}
+
+			//player 1 move left
+			if(event.keyCode == 37) {
+				//alert('a was pressed');
+				scene1.popInput("left");
+			}
+			//player 1 move right
+			if(event.keyCode == 39) {
+				//use item
+				scene1.popInput("right");
 				//alert('x was pressed');
 			}
 	});

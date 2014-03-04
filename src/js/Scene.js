@@ -43,6 +43,9 @@ var Scene = function(sceneNum, scene_pos_x, scene_pos_y, scene_width, scene_heig
 		if(this.inputBuffer["jump"]) this.player.jump();
 		if(this.inputBuffer["slide"]) this.player.crouch();
 		if(this.inputBuffer["item"]) this.player.useItem();
+		if(this.inputBuffer["right"]) this.player.moveRight();
+		if(this.inputBuffer["left"]) this.player.moveLeft();
+
 	}
 	//calls the draw of each entity in the scene
 	this.draw = function(ctx){

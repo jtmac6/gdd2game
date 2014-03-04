@@ -42,6 +42,24 @@ var Player = function(xPosition, yPosition, source){
 	this.slide = function(){
 
 	}
+
+	this.moveRight = function(){
+
+		if(this.player.x <= 1780){
+
+			this.x+=10
+
+		}
+	}
+
+	this.moveLeft = function(){
+		if(this.x >= 20){
+
+			this.x-=10
+
+		}
+	}
+
 	//causes the player to use his item
 	this.useItem = function(){
 
