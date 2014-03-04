@@ -118,7 +118,7 @@ var Scene = function(sceneNum, scene_pos_x, scene_pos_y, scene_width, scene_heig
 	* Respawn the player.
 	**/
 	this.respawn = function() {
-		player.x = this.initialPlayerX;
+		this.player.x = this.initialPlayerX;
 	}
 	
 	//checks collisions, also resolves them
