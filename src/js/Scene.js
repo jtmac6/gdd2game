@@ -74,7 +74,15 @@ var Scene = function(sceneNum, scene_pos_x, scene_pos_y, scene_width, scene_heig
 	this.generateNewObjects = function(){
 		this.objectGenerationTick += milis;
 		if( this.objectGenerationTick > 2000 ) {
-			this.gameEntities.push( new Obstacle( 1000, this.scene_y + this.scene_height - 30, 32, 32, this.sceneNum != 1 ? 'assets/BlockBlue.png' : 'assets/BlockRed.png', false ) );
+			var heightMod = ( Math.random() * Math.random() ) * 25;
+			this.gameEntities.push( 
+				new Obstacle( 
+					this.scene_x + this.scene_width - 32, 
+					this.scene_y + this.scene_height - 32 - heightMod, 
+					32, 
+					32, 
+					this.sceneNum != 1 ? 'assets/BlockBlue.png' : 'assets/BlockRed.png', 
+					false ) );
 			this.objectGenerationTick = 0;
 		}
 	}
