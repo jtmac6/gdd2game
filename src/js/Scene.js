@@ -86,19 +86,31 @@ var Scene = function(sceneNum, scene_pos_x, scene_pos_y, scene_width, scene_heig
 			this.objectGenerationTick = 0;
 		}
 	}
+	
+	/**
+	* Resolve a collision with an entity.
+	* @param entity The entity that the player collided with.
+	**/
+	this.resolveCollision = function(entity) {
+		var player = this.player;
+		
+		/* TODO:
+		* If the player is coming up from the bottom, 
+		* Set a variable to ignore the collision until they are no 
+		* longer colliding with the entity
+		*/
+		console.log("Collision!");
+	}
+	
 	//checks collisions, also resolves them
-	this.checkCollisions = function(){
+	this.checkCollisions = function() {
 		for (var i = this.gameEntities.length - 1; i >= 0; i--) {
-			var nextEntity = gameEntities[i];
+			var nextEntity = this.gameEntities[i];
 			// Check if the entity intersects with the player
-			if (intersectsPlayer(entity))
+			if (this.intersectsPlayer(nextEntity))
 			{
 				// Handle collision!
-				
-				// If the player is coming up from the bottom, 
-				// Set a variable to ignore the collision until they are no 
-				// longer colliding with the entity
-				
+				this.resolveCollision(nextEntity);
 			}
 		};
 	}
@@ -106,13 +118,13 @@ var Scene = function(sceneNum, scene_pos_x, scene_pos_y, scene_width, scene_heig
 	// Check if an entity intersects the player.
 	this.intersectsPlayer = function(entity) {
 		var noOverlap = (
-			entity.x > player.x+player.width ||
-			player.x > entity.x+entity.width ||
-			entity.y > player.y+player.height ||
-			player.y > entity.y+entity.height
+			entity.x > this.player.x+this.player.width ||
+			this.player.x > entity.x+entity.width ||
+			entity.y > this.player.y+this.player.height ||
+			this.player.y > entity.y+entity.height
 			);
 		return !noOverlap;
-	};
+	}
 	
 	//updates the game to the next state
 	this.update = function(ctx){
@@ -128,6 +140,7 @@ var Scene = function(sceneNum, scene_pos_x, scene_pos_y, scene_width, scene_heig
 			this.player.isJumping = false;
 			this.player.isHighJumping = false;
 		}
+		this.checkCollisions();
 		this.draw(ctx);
 		this.moveObstacles();
 		this.generateNewObjects();
