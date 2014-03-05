@@ -10,7 +10,7 @@ var Scene = function(sceneNum, scene_pos_x, scene_pos_y, scene_width, scene_heig
 	this.scene_height = scene_height;
 	this.gravity = 3;
 	this.initialPlayerX = 250;
-	this.player = new Player(this.initialPlayerX,this.scene_y + this.scene_height - 50, this.sceneNum == 1 ? 'assets/PlayerBlue.png' : 'assets/PlayerRed.png');
+	this.player = new Player(this.initialPlayerX,this.scene_y + this.scene_height - 50, this.sceneNum == 1 ? 'assets/Player1.png' : 'assets/Player2.png');
 	this.inputBuffer = {"jump": false, "item":false, "slide": false};
 	/*
 	Prototyping Code
@@ -85,7 +85,7 @@ var Scene = function(sceneNum, scene_pos_x, scene_pos_y, scene_width, scene_heig
 					this.scene_y + this.scene_height - 32 - heightMod, 
 					32, 
 					32, 
-					this.sceneNum != 1 ? 'assets/BlockBlue.png' : 'assets/BlockRed.png', 
+					this.sceneNum != 1 ? 'assets/BlockGreen.png' : 'assets/BlockRed.png', 
 					false ) );
 			this.objectGenerationTick = 0;
 		}
