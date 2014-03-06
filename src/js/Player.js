@@ -1,5 +1,5 @@
 var Player = function(xPosition, yPosition, source){
-	this.x = xPosition;
+	this.x = xPosition; // in LEVEL space, not scene space
 	this.y = yPosition;
 	//constant values, arbitrary for now
 	this.width = 32;

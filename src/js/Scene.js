@@ -1,17 +1,18 @@
-var Scene = function(sceneNum, scene_pos_x, scene_pos_y, scene_width, scene_height){
+var Scene = function(sceneNum, scenePosX, scenePosY, sceneWidth, sceneHeight, level){
 	this.sceneNum = sceneNum;
-	this.gameEntities = [];	
-	this.speed = 100;
+	this.speed = 15;
 	this.timePassed = 0;
 	this.objectGenerationTick = 0;
-	this.scene_y = scene_pos_y;
-	this.scene_x = scene_pos_x;
-	this.scene_width = scene_width;
-	this.scene_height = scene_height;
+	this.sceneDrawY = scenePosY;
+	this.sceneDrawX = scenePosX;
+	this.sceneX = 0;
+	this.sceneWidth = sceneWidth;
+	this.sceneHeight = sceneHeight;
 	this.gravity = 3;
 	this.initialPlayerX = 250;
-	this.player = new Player(this.initialPlayerX,this.scene_y + this.scene_height - 50, this.sceneNum == 1 ? 'assets/Player1.png' : 'assets/Player2.png');
+	this.player = new Player(this.initialPlayerX,this.sceneDrawY + this.sceneHeight - 50, this.sceneNum == 1 ? 'assets/Player1.png' : 'assets/Player2.png');
 	this.inputBuffer = {"jump": false, "item":false, "slide": false};
+	this.levelState = level;
 	/*
 	Prototyping Code
 	document.addEventListener('keydown', function(event){
@@ -53,7 +54,7 @@ var Scene = function(sceneNum, scene_pos_x, scene_pos_y, scene_width, scene_heig
 		ctx.strokeWidth = 5;
 		ctx.fillStyle = "green";
 		
-		ctx.strokeRect(this.scene_x,this.scene_y, this.scene_width, this.scene_height);
+		ctx.strokeRect(this.sceneDrawX,this.sceneDrawY, this.sceneWidth, this.sceneHeight);
 		
 		//draw entities
 		this.player.draw(ctx);
@@ -64,31 +65,6 @@ var Scene = function(sceneNum, scene_pos_x, scene_pos_y, scene_width, scene_heig
 	//cleans up objects which are no longer needed
 	this.clearArtifacts = function(){
 
-	}
-	//moves that static obstacles in the scene to the left
-	this.moveObstacles = function(){
-        for( var i = this.gameEntities.length - 1; i >= 0; i-- ) {
-			this.gameEntities[i].x -= ( milis / 1000 ) * this.speed;
-			if( this.gameEntities[i].x < this.scene_x - this.gameEntities[i].width / 2 ) {
-				this.gameEntities.splice( i, 1 );
-			}
-        }
-	}
-	//creates new objects in the scene
-	this.generateNewObjects = function(){
-		this.objectGenerationTick += milis;
-		if( this.objectGenerationTick > 2000 ) {
-			var heightMod = ( Math.random() * Math.random() ) * 25;
-			this.gameEntities.push( 
-				new Obstacle( 
-					this.scene_x + this.scene_width - 32, 
-					this.scene_y + this.scene_height - 32 - heightMod, 
-					32, 
-					32, 
-					this.sceneNum != 1 ? 'assets/BlockGreen.png' : 'assets/BlockRed.png', 
-					false ) );
-			this.objectGenerationTick = 0;
-		}
 	}
 	
 	/**
@@ -150,14 +126,14 @@ var Scene = function(sceneNum, scene_pos_x, scene_pos_y, scene_width, scene_heig
 	
 	//updates the game to the next state
 	this.update = function(ctx){
-		this.timePassed += milis;
+		this.sceneX += speed;
 		//tell the player what to do
 		this.callPlayerActions();
 		this.player.yvelocity -= this.gravity;
 		this.player.y -= this.player.yvelocity;
-		if( ( this.player.y + this.player.height ) > ( this.scene_y + this.scene_height ) )
+		if( ( this.player.y + this.player.height ) > ( this.sceneDrawY + this.sceneHeight ) )
 		{
-			this.player.y = this.scene_y + this.scene_height - this.player.height;
+			this.player.y = this.sceneDrawY + this.sceneHeight - this.player.height;
 			this.player.yvelocity = 0;
 			this.player.isJumping = false;
 			this.player.isHighJumping = false;
@@ -165,6 +141,5 @@ var Scene = function(sceneNum, scene_pos_x, scene_pos_y, scene_width, scene_heig
 		this.checkCollisions();
 		this.draw(ctx);
 		this.moveObstacles();
-		this.generateNewObjects();
 	}
 }

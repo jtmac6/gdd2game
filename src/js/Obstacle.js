@@ -1,5 +1,5 @@
 var Obstacle = function(xPosition, yPosition, width, height, source, breakable){
-	this.x = xPosition;
+	this.x = xPosition; // in LEVEL space, not scene space
 	this.y = yPosition;
 	this.width = width;
 	this.height = height;
