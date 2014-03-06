@@ -11,7 +11,7 @@ var Scene = function(sceneNum, scene_pos_x, scene_pos_y, scene_width, scene_heig
 	this.gravity = 3;
 	this.initialPlayerX = 250;
 	this.player = new Player(this.initialPlayerX,this.scene_y + this.scene_height - 50, this.sceneNum == 1 ? 'assets/PlayerBlue.png' : 'assets/PlayerRed.png');
-	this.inputBuffer = {"jump": false, "item":false, "slide": false};
+	this.inputBuffer = {"jump": false, "item":false, "slide": false, "right":false, "left":false};
 	/*
 	Prototyping Code
 	document.addEventListener('keydown', function(event){

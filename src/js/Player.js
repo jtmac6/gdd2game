@@ -41,21 +41,27 @@ var Player = function(xPosition, yPosition, source){
 	//causes the player to slide forward
 	this.slide = function(){
 
+		if(this.x <= 1780 -this.width){
+
+			this.x+=30;
+
+		}
+
 	}
 
 	this.moveRight = function(){
 
-		if(this.player.x <= 1780){
+		if(this.x <= 1780 -this.width){
 
-			this.x+=10
+			this.x+=10;
 
 		}
 	}
 
 	this.moveLeft = function(){
-		if(this.x >= 20){
+		if(this.x >= 20 + this.width){
 
-			this.x-=10
+			this.x-=10;
 
 		}
 	}
