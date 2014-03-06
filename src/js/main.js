@@ -5,20 +5,17 @@ var scene2;
 var ctx;
 var milis = 60;
 var frameCount = 0;
-enum States{
-	menu = 1;
-	game = 2;
-	pause = 3;
-	gameOver = 4;
-}
 var state;
+var Level;
+
 function init() {
+	Level = new Level( 6000, 50, 100, 20 );
+	state = "game";
 	// Grab our canvas.
 	var canvas = document.getElementById('canvas');
 	ctx = canvas.getContext('2d');
-	state = States.menu;
-	scene1 = new Scene(1,10, 10, 1800, 300);
-	scene2 = new Scene(2,10, 320, 1800, 300 );
+	scene1 = new Scene(1,10, 10, 1800, 300, Level);
+	scene2 = new Scene(2,10, 320, 1800, 300, Level);
 	// Make the canvas fullscreen
 	canvas.width = window.innerWidth;
 	canvas.height = window.innerHeight;
@@ -48,27 +45,27 @@ function init() {
 			}
 
 
-			// player 1 jump
+			// player 2 jump
 			if(event.keyCode == 38) {
 				//alert('w was pressed');
-				scene1.pushInput("jump");
+				scene2.pushInput("jump");
 			}
-			//player 1 use item
+			//player 2 use item
 			if(event.keyCode == 40) {
 				//use item
-				scene1.pushInput("item");
+				scene2.pushInput("item");
 				//alert('a was pressed');
 			}
 
-			//player 1 move left
+			//player 2 move left
 			if(event.keyCode == 37) {
 				//alert('a was pressed');
-				scene1.pushInput("left");
+				scene2.pushInput("left");
 			}
-			//player 1 move right
+			//player 2 move right
 			if(event.keyCode == 39) {
 				//use item
-				scene1.pushInput("right");
+				scene2.pushInput("right");
 				//alert('x was pressed');
 			}
 
@@ -99,27 +96,27 @@ function init() {
 			}
 
 
-			// player 1 jump
+			// player 2 jump
 			if(event.keyCode == 38) {
 				//alert('w was pressed');
-				scene1.popInput("jump");
+				scene2.popInput("jump");
 			}
-			//player 1 use item
+			//player 2 use item
 			if(event.keyCode == 40) {
 				//use item
-				scene1.popInput("item");
+				scene2.popInput("item");
 				//alert('a was pressed');
 			}
 
-			//player 1 move left
+			//player 2 move left
 			if(event.keyCode == 37) {
 				//alert('a was pressed');
-				scene1.popInput("left");
+				scene2.popInput("left");
 			}
-			//player 1 move right
+			//player 2 move right
 			if(event.keyCode == 39) {
 				//use item
-				scene1.popInput("right");
+				scene2.popInput("right");
 				//alert('x was pressed');
 			}
 	});
@@ -131,21 +128,19 @@ function init() {
 }
 
 function update(){
-	if(state == States.game){
+	if(state == "game"){
 		++frameCount;
 		ctx.clearRect(0, 0, canvas.width, canvas.height);
 		scene1.update(ctx);
 		scene2.update(ctx);
 	}
-	else if(state == States.menu){
+	else if(state == "menu"){
 		//draw menus
 	}
-	else if(state == States.pause){
+	else if(state == "pause"){
 		//pause
 	}
-	else if(state == States.gameOver){
+	else if(state == "gameover"){
 		//gameover screen
-	}
-
 	}
 }
