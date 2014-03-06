@@ -5,11 +5,12 @@ var scene2;
 var ctx;
 var milis = 60;
 var frameCount = 0;
+var state;
 var Level;
 
 function init() {
 	Level = new Level( 6000, 50, 100, 20 );
-
+	state = "game";
 	// Grab our canvas.
 	var canvas = document.getElementById('canvas');
 	ctx = canvas.getContext('2d');
@@ -127,8 +128,19 @@ function init() {
 }
 
 function update(){
-	++frameCount;
-	ctx.clearRect(0, 0, canvas.width, canvas.height);
-	scene1.update(ctx);
-	scene2.update(ctx);
+	if(state == "game"){
+		++frameCount;
+		ctx.clearRect(0, 0, canvas.width, canvas.height);
+		scene1.update(ctx);
+		scene2.update(ctx);
+	}
+	else if(state == "menu"){
+		//draw menus
+	}
+	else if(state == "pause"){
+		//pause
+	}
+	else if(state == "gameover"){
+		//gameover screen
+	}
 }
