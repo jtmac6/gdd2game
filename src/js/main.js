@@ -5,10 +5,18 @@ var scene2;
 var ctx;
 var milis = 60;
 var frameCount = 0;
+enum States{
+	menu = 1;
+	game = 2;
+	pause = 3;
+	gameOver = 4;
+}
+var state;
 function init() {
 	// Grab our canvas.
 	var canvas = document.getElementById('canvas');
 	ctx = canvas.getContext('2d');
+	state = States.menu;
 	scene1 = new Scene(1,10, 10, 1800, 300);
 	scene2 = new Scene(2,10, 320, 1800, 300 );
 	// Make the canvas fullscreen
@@ -123,8 +131,21 @@ function init() {
 }
 
 function update(){
-	++frameCount;
-	ctx.clearRect(0, 0, canvas.width, canvas.height);
-	scene1.update(ctx);
-	scene2.update(ctx);
+	if(state == States.game){
+		++frameCount;
+		ctx.clearRect(0, 0, canvas.width, canvas.height);
+		scene1.update(ctx);
+		scene2.update(ctx);
+	}
+	else if(state == States.menu){
+		//draw menus
+	}
+	else if(state == States.pause){
+		//pause
+	}
+	else if(state == States.gameOver){
+		//gameover screen
+	}
+
+	}
 }
