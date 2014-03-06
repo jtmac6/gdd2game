@@ -10,9 +10,9 @@ var Obstacle = function(xPosition, yPosition, width, height, source, breakable){
 	//be very clear on what is breakable
 	this.color = breakable ? "red" : "yellow";
 
-	this.draw = function(ctx){
+	this.draw = function(ctx, xOffset){
 		ctx.fillStyle = this.color;
-		ctx.drawImage( this.img, this.x, this.y, this.width, this.height );
+		ctx.drawImage( this.img, this.x - xOffset, this.y, this.width, this.height );
 		//ctx.fillRect(this.x, this.y, this.width, this.height);
 	}
 }

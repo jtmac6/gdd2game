@@ -12,7 +12,7 @@ var Scene = function(sceneNum, scenePosX, scenePosY, sceneWidth, sceneHeight, le
 	this.initialPlayerX = 250;
 	this.player = new Player(this.initialPlayerX,this.sceneDrawY + this.sceneHeight - 50, this.sceneNum == 1 ? 'assets/Player1.png' : 'assets/Player2.png');
 	this.inputBuffer = {"jump": false, "item":false, "slide": false};
-	this.levelState = level;
+	this.level = level;
 	/*
 	Prototyping Code
 	document.addEventListener('keydown', function(event){
@@ -57,9 +57,10 @@ var Scene = function(sceneNum, scenePosX, scenePosY, sceneWidth, sceneHeight, le
 		ctx.strokeRect(this.sceneDrawX,this.sceneDrawY, this.sceneWidth, this.sceneHeight);
 		
 		//draw entities
-		this.player.draw(ctx);
-		for (var i = this.gameEntities.length - 1; i >= 0; i--) {
-			this.gameEntities[i].draw(ctx);
+		this.player.draw(ctx, this.sceneX);
+		for (var i = this.sceneX; i < this.sceneX + this.sceneWidth; i++) {
+			if(this.level.levelEntities[i] !== undefined)
+				this.level.levelEntities[i].draw(ctx, this.sceneX);
 		};
 	}
 	//cleans up objects which are no longer needed
@@ -102,10 +103,10 @@ var Scene = function(sceneNum, scenePosX, scenePosY, sceneWidth, sceneHeight, le
 	
 	//checks collisions, also resolves them
 	this.checkCollisions = function() {
-		for (var i = this.gameEntities.length - 1; i >= 0; i--) {
-			var nextEntity = this.gameEntities[i];
+		for (var i = this.sceneX; i < this.sceneX + this.sceneWidth; i++) {
+			var nextEntity = this.level.levelEntities[i];
 			// Check if the entity intersects with the player
-			if (this.intersectsPlayer(nextEntity))
+			if (nextEntity !== undefined && this.intersectsPlayer(nextEntity))
 			{
 				// Handle collision!
 				this.resolveCollision(nextEntity);
@@ -126,7 +127,8 @@ var Scene = function(sceneNum, scenePosX, scenePosY, sceneWidth, sceneHeight, le
 	
 	//updates the game to the next state
 	this.update = function(ctx){
-		this.sceneX += speed;
+		this.sceneX += this.speed;
+		this.player.x += this.speed;
 		//tell the player what to do
 		this.callPlayerActions();
 		this.player.yvelocity -= this.gravity;
@@ -140,6 +142,6 @@ var Scene = function(sceneNum, scenePosX, scenePosY, sceneWidth, sceneHeight, le
 		}
 		this.checkCollisions();
 		this.draw(ctx);
-		this.moveObstacles();
+		//this.moveObstacles();
 	}
 }
