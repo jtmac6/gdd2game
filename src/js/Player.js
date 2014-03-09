@@ -33,7 +33,6 @@ var Player = function(xPosition, yPosition, source){
 		var timeDif = Math.abs(this.jumpStartTime - frameCount);
 		if( this.yvelocity > 0 && timeDif < 6 && timeDif > 1)
 		{
-			console.log(timeDif);
 			if(timeDif != 0)
 				this.yvelocity += .6 * (8 - timeDif);
 		}
@@ -76,7 +75,7 @@ var Player = function(xPosition, yPosition, source){
 	this.draw = function(ctx, xOffset){
 		//constant color, can change
 		ctx.fillStyle = "blue";
-		console.log( "drawing player at " + (this.x - xOffset));
+		//console.log( "drawing player at " + (this.x - xOffset));
 		ctx.drawImage( this.img, this.x - xOffset, this.y, this.width, this.height );
 		//ctx.fillRect(this.x, this.y, this.width, this.height);
 	}
