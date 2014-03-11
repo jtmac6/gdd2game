@@ -1,5 +1,9 @@
-var Level = function( length, minSpace, maxSpace, maxHeight )
+var Level = function( length, minSpace, maxSpace, maxHeight, sceneHeight )
 {
+	// The length of the level, in pixels?
+	this.levelLength = length;
+	
+	// The entities of the level
 	this.levelEntities = [];
 
 	var lastSpawn = 0;
@@ -11,7 +15,7 @@ var Level = function( length, minSpace, maxSpace, maxHeight )
 		{
 			this.levelEntities[i] = new Obstacle(
 				i,
-				0,
+				sceneHeight-32,
 				32,
 				32,
 				'assets/BlockGreen.png',

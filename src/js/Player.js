@@ -1,40 +1,51 @@
 var Player = function(xPosition, yPosition, source){
-	this.x = xPosition; // in LEVEL space, not scene space
+	
+	// The location of the player, in level space
+	this.x = xPosition;
 	this.y = yPosition;
-	//constant values, arbitrary for now
+	
+	// The width and height of the player (arbitrary for now?)
 	this.width = 32;
 	this.height = 64;
+	
+	// The image of the player
 	this.img = new Image();
 	this.img.src = source;
-	this.yvelocity = 0;
+	
+	// The Y velocity of the player
+	this.yVelocity = 0;
+	
+	// Is the player jumping
 	this.isJumping = false;
 	this.isHighJumping = false;
+	
+	// Jumping related variables
 	this.jumpStartTime = frameCount;
-	this.jumpheight = 1;
+	this.jumpHeight = 1;
 	
 	/**
 	* Is the player dead.
 	* @return If the player is dead.
 	**/
-	this.isDead = function() {
-		return this.x < 0;
+	this.isDead = function(sceneX) {
+		return this.x <= sceneX;
 	}
 
 	this.jump = function(){
 		
 		if( !this.isJumping )
 		{
-			this.yvelocity = 17;
+			this.yVelocity = 17;
 			this.isJumping = true;
 			//get the time the player begins to jump.
 			this.jumpStartTime = frameCount;
 		}
 		//high jumping
 		var timeDif = Math.abs(this.jumpStartTime - frameCount);
-		if( this.yvelocity > 0 && timeDif < 6 && timeDif > 1)
+		if( this.yVelocity > 0 && timeDif < 6 && timeDif > 1)
 		{
 			if(timeDif != 0)
-				this.yvelocity += .6 * (8 - timeDif);
+				this.yVelocity += .6 * (8 - timeDif);
 		}
 	}
 	//causes the player to slide forward
@@ -72,11 +83,11 @@ var Player = function(xPosition, yPosition, source){
 	this.handleInput = function(){
 		
 	}
-	this.draw = function(ctx, xOffset, yOffset){
+	this.draw = function(ctx, xOffset){
 		//constant color, can change
 		ctx.fillStyle = "blue";
 		//console.log( "drawing player at " + (this.x - xOffset));
-		ctx.drawImage( this.img, this.x - xOffset, ( yOffset - this.y ) - this.height, this.width, this.height );
+		ctx.drawImage( this.img, this.x - xOffset, this.y, this.width, this.height );
 		//ctx.fillRect(this.x, this.y, this.width, this.height);
 	}
 }

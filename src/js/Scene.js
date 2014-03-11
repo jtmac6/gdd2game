@@ -1,18 +1,49 @@
-var Scene = function(sceneNum, scenePosX, scenePosY, sceneWidth, sceneHeight, level){
+var Scene = function(sceneNum, scenePosX, scenePosY, sceneWidth, sceneHeight, level) {
+	// The number of the scene; 1 is top, 2 is bottom.
 	this.sceneNum = sceneNum;
+	
+	// The speed at which the scene scrolls.
 	this.speed = 15;
+	
+	// ?
 	this.timePassed = 0;
+	
+	// ?
 	this.objectGenerationTick = 0;
+	
+	// The position on the Canvas at which the scene is drawn.
 	this.sceneDrawY = scenePosY;
 	this.sceneDrawX = scenePosX;
-	this.sceneX = 0;
+	
+	// The dimensions of the scene
 	this.sceneWidth = sceneWidth;
 	this.sceneHeight = sceneHeight;
+	
+	// The current X position in the level
+	this.sceneX = 0;
+	
+	// Gravitational constant?
 	this.gravity = 3;
+	
+	// The initial X location of the player
 	this.initialPlayerX = 250;
-	this.player = new Player(this.initialPlayerX, 0, this.sceneNum == 1 ? 'assets/Player1.png' : 'assets/Player2.png');
+	
+	// The actual player object
+	this.player = new Player(this.initialPlayerX,this.sceneDrawY + this.sceneHeight - 50, this.sceneNum == 1 ? 'assets/Player1.png' : 'assets/Player2.png');
+	this.player.y = this.sceneDrawY + this.sceneHeight - this.player.height;
+	
+	// The input buffer for key presses
 	this.inputBuffer = {"jump": false, "item":false, "slide": false};
+	
+	// The current level
 	this.level = level;
+	
+	// The state of the current level
+	this.levelState = "countdown";
+	
+	// The start timestamp
+	this.startTimestamp = -1;
+	
 	/*
 	Prototyping Code
 	document.addEventListener('keydown', function(event){
@@ -26,20 +57,24 @@ var Scene = function(sceneNum, scenePosX, scenePosY, sceneWidth, sceneHeight, le
 	});
 	*/
 
-	//initializes the starting state of the game
+	// Initializes the starting state of the game
 	this.init = function(){
 
 	}
-	//pushes a keyboard input to the scene's input buffer
+	
+	// Pushes a keyboard input to the scene's input buffer
 	this.pushInput = function(input){
 		if(input in this.inputBuffer)
 			this.inputBuffer[input] = true;
 	}
+	
+	// 
 	this.popInput = function(input){
 		if(input in this.inputBuffer)
 			this.inputBuffer[input] = false;
 	}
-	//simply informs the player which actions it should be taking
+	
+	// Simply informs the player which actions it should be taking
 	this.callPlayerActions = function(){
 		if(this.inputBuffer["jump"]) this.player.jump();
 		if(this.inputBuffer["slide"]) this.player.crouch();
@@ -48,26 +83,56 @@ var Scene = function(sceneNum, scenePosX, scenePosY, sceneWidth, sceneHeight, le
 		if(this.inputBuffer["left"]) this.player.moveLeft();
 
 	}
-	//calls the draw of each entity in the scene
+	
+	// Calls the draw of each entity in the scene, and draws the scene border
 	this.draw = function(ctx){
-		//draw the screen itself
+		
+		// Draw the scene itself
 		ctx.strokeWidth = 5;
 		ctx.fillStyle = "green";
 		
 		ctx.strokeRect(this.sceneDrawX,this.sceneDrawY, this.sceneWidth, this.sceneHeight);
 		
-		//draw entities
-		this.player.draw(ctx, this.sceneX, this.sceneDrawY + this.sceneHeight);
-		for (var i = 0; i < this.sceneWidth; i++) {
-            var obstacle = this.level.levelEntities[i + this.sceneX];
-            //console.log(obstacle);
-			if(obstacle !== undefined)
-            {
-				obstacle.draw(ctx, i, this.sceneDrawY + this.sceneHeight - 32);
-            }
+		if (this.levelState != "running")
+		{
+			ctx.font = "20px Comic Sans";
+			var message = "";
+			var drawX = this.sceneDrawX + 10;
+			var drawY = this.sceneDrawY + 30;
+			if (this.levelState == "complete")
+			{
+				message = "Level Complete!";
+				ctx.fillStyle = "green";
+			}
+			else if (this.levelState == "lost")
+			{
+				message = "Better luck next time...";
+				ctx.fillStyle = "red";
+			}
+			else if (this.levelState == "countdown" && this.startTimestamp != -1)
+			{
+				var now = Date.now();
+				var delta = this.startTimestamp-now;
+				var seconds = Math.round(delta/1000);
+				message = "Level begins in " + seconds + "...";
+				ctx.fillStyle = "black";
+				if (seconds == 0)
+				{
+					this.levelState = "running";
+				}
+			}
+			ctx.fillText(message, drawX, drawY);
+		}
+		
+		// Draw entities
+		this.player.draw(ctx, this.sceneX);
+		for (var i = this.sceneX; i < this.sceneX + this.sceneWidth; i++) {
+			if(this.level.levelEntities[i] !== undefined)
+				this.level.levelEntities[i].draw(ctx, this.sceneX, this.sceneDrawY);
 		};
 	}
-	//cleans up objects which are no longer needed
+	
+	// Cleans up objects which are no longer needed
 	this.clearArtifacts = function(){
 
 	}
@@ -86,14 +151,31 @@ var Scene = function(sceneNum, scenePosX, scenePosY, sceneWidth, sceneHeight, le
 		*/
 		//console.log("Collision!");
 		
-		if (true)
+		if (false)
 		{
 			// Push the player for now
 			player.x = entity.x-player.width;
 			
-			if (player.isDead())
+			if (player.isDead(this.sceneX))
 			{
 				this.respawn();
+			}
+		}
+		else
+		{
+			if (player.y + player.height < entity.y + entity.height +  this.sceneDrawY)
+			{
+				// Stop gravity!
+				if (player.yVelocity < 0)
+				{
+					player.yVelocity = this.gravity;
+				}
+			}
+			else
+			{
+				// Stop the scene from moving
+				this.sceneX -= this.speed;
+				this.player.x -= this.speed;
 			}
 		}
 	}
@@ -123,29 +205,58 @@ var Scene = function(sceneNum, scenePosX, scenePosY, sceneWidth, sceneHeight, le
 		var noOverlap = (
 			entity.x > this.player.x+this.player.width ||
 			this.player.x > entity.x+entity.width ||
-			entity.y > this.player.y+this.player.height ||
-			this.player.y > entity.y+entity.height
+			entity.y + this.sceneDrawY > this.player.y+this.player.height ||
+			this.player.y > entity.y + this.sceneDrawY + entity.height
 			);
 		return !noOverlap;
 	}
 	
-	//updates the game to the next state
-	this.update = function(ctx){
+	// Updates the game to the next state
+	this.update = function(ctx) {
+		
+		// Check the state of the level
+	 	if (this.levelState != "running")
+		{
+			if (this.levelState == "countdown")
+			{
+				
+			}
+			this.draw(ctx);
+			return;
+		}
+		else if (this.sceneX >= level.levelLength)
+		{
+			// Level complete!
+			this.levelState = "complete";
+			this.draw(ctx);
+			return;
+		}
+		
+		// Scroll that stuff!
 		this.sceneX += this.speed;
 		this.player.x += this.speed;
-		//tell the player what to do
+		
+		// Tell the player what to do
 		this.callPlayerActions();
-		this.player.yvelocity -= this.gravity;
-		this.player.y += this.player.yvelocity;
-		if( ( this.player.y - this.player.height ) < 0 )
+		
+		// Check for collisions
+		this.checkCollisions();
+		
+		// Apply gravity for jumping and crap
+		this.player.yVelocity -= this.gravity;
+		this.player.y -= this.player.yVelocity;
+		if( ( this.player.y + this.player.height ) > ( this.sceneDrawY + this.sceneHeight ) )
 		{
-			this.player.y = 0;
-			this.player.yvelocity = 0;
+			this.player.y = this.sceneDrawY + this.sceneHeight - this.player.height;
+			this.player.yVelocity = 0;
 			this.player.isJumping = false;
 			this.player.isHighJumping = false;
 		}
-		this.checkCollisions();
+		
+		// Draw everything
 		this.draw(ctx);
+		
+		// Don't move the obstacles anymore.
 		//this.moveObstacles();
 	}
 }
