@@ -58,9 +58,13 @@ var Scene = function(sceneNum, scenePosX, scenePosY, sceneWidth, sceneHeight, le
 		
 		//draw entities
 		this.player.draw(ctx, this.sceneX);
-		for (var i = this.sceneX; i < this.sceneX + this.sceneWidth; i++) {
-			if(this.level.levelEntities[i] !== undefined)
-				this.level.levelEntities[i].draw(ctx, this.sceneX);
+		for (var i = 0; i < this.sceneWidth; i++) {
+            var obstacle = this.level.levelEntities[i + this.sceneX];
+            //console.log(obstacle);
+			if(obstacle !== undefined)
+            {
+				obstacle.draw(ctx, i, this.drawY + this.drawHeight);
+            }
 		};
 	}
 	//cleans up objects which are no longer needed
