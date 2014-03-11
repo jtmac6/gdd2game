@@ -10,7 +10,7 @@ var Scene = function(sceneNum, scenePosX, scenePosY, sceneWidth, sceneHeight, le
 	this.sceneHeight = sceneHeight;
 	this.gravity = 3;
 	this.initialPlayerX = 250;
-	this.player = new Player(this.initialPlayerX,this.sceneDrawY + this.sceneHeight - 50, this.sceneNum == 1 ? 'assets/Player1.png' : 'assets/Player2.png');
+	this.player = new Player(this.initialPlayerX, 0, this.sceneNum == 1 ? 'assets/Player1.png' : 'assets/Player2.png');
 	this.inputBuffer = {"jump": false, "item":false, "slide": false};
 	this.level = level;
 	/*
@@ -57,13 +57,13 @@ var Scene = function(sceneNum, scenePosX, scenePosY, sceneWidth, sceneHeight, le
 		ctx.strokeRect(this.sceneDrawX,this.sceneDrawY, this.sceneWidth, this.sceneHeight);
 		
 		//draw entities
-		this.player.draw(ctx, this.sceneX);
+		this.player.draw(ctx, this.sceneX, this.sceneDrawY + this.sceneHeight);
 		for (var i = 0; i < this.sceneWidth; i++) {
             var obstacle = this.level.levelEntities[i + this.sceneX];
             //console.log(obstacle);
 			if(obstacle !== undefined)
             {
-				obstacle.draw(ctx, i, this.drawY + this.drawHeight);
+				obstacle.draw(ctx, i, this.sceneDrawY + this.sceneHeight - 32);
             }
 		};
 	}
@@ -102,7 +102,7 @@ var Scene = function(sceneNum, scenePosX, scenePosY, sceneWidth, sceneHeight, le
 	* Respawn the player.
 	**/
 	this.respawn = function() {
-		this.player.x = this.initialPlayerX;
+		this.player.x = this.initialPlayerX + this.sceneX;
 	}
 	
 	//checks collisions, also resolves them
@@ -136,10 +136,10 @@ var Scene = function(sceneNum, scenePosX, scenePosY, sceneWidth, sceneHeight, le
 		//tell the player what to do
 		this.callPlayerActions();
 		this.player.yvelocity -= this.gravity;
-		this.player.y -= this.player.yvelocity;
-		if( ( this.player.y + this.player.height ) > ( this.sceneDrawY + this.sceneHeight ) )
+		this.player.y += this.player.yvelocity;
+		if( ( this.player.y - this.player.height ) < 0 )
 		{
-			this.player.y = this.sceneDrawY + this.sceneHeight - this.player.height;
+			this.player.y = 0;
 			this.player.yvelocity = 0;
 			this.player.isJumping = false;
 			this.player.isHighJumping = false;

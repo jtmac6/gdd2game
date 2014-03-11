@@ -11,6 +11,7 @@ var mousePos;
 var intercepting = false;
 function init() {
 	Level = new Level( 6000, 50, 100, 20 );
+    console.log( Level );
 	state = "menu";
 	// Grab our canvas.
 	var canvas = document.getElementById('canvas');

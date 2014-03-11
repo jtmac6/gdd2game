@@ -10,9 +10,10 @@ var Obstacle = function(xPosition, yPosition, width, height, source, breakable){
 	//be very clear on what is breakable
 	this.color = breakable ? "red" : "yellow";
 
-	this.draw = function(ctx, xPos, yPos){
+    // xOffset represents how far over the scene is, but yOffset should just be scene-space positioning
+	this.draw = function(ctx, xOffset, yOffset){
 		ctx.fillStyle = this.color;
-		ctx.drawImage( this.img, xPos, yPos, this.width, this.height );
+		ctx.drawImage( this.img, this.x - xOffset, yOffset - this.y - this.height, this.width, this.height );
 		//ctx.fillRect(this.x, this.y, this.width, this.height);
 	}
 }

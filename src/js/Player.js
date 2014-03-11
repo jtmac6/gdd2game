@@ -72,11 +72,11 @@ var Player = function(xPosition, yPosition, source){
 	this.handleInput = function(){
 		
 	}
-	this.draw = function(ctx, xOffset){
+	this.draw = function(ctx, xOffset, yOffset){
 		//constant color, can change
 		ctx.fillStyle = "blue";
 		//console.log( "drawing player at " + (this.x - xOffset));
-		ctx.drawImage( this.img, this.x - xOffset, this.y, this.width, this.height );
+		ctx.drawImage( this.img, this.x - xOffset, ( yOffset - this.y ) - this.height, this.width, this.height );
 		//ctx.fillRect(this.x, this.y, this.width, this.height);
 	}
 }
