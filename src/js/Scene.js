@@ -85,7 +85,7 @@ var Scene = function(sceneNum, scenePosX, scenePosY, sceneWidth, sceneHeight, le
 	};
 	
 	// Calls the draw of each entity in the scene, and draws the scene border
-	this.draw = function(ctx){
+	this.draw = function(ctx, scores){
 		
 		// Draw the scene itself
 		ctx.strokeWidth = 5;
@@ -123,6 +123,13 @@ var Scene = function(sceneNum, scenePosX, scenePosY, sceneWidth, sceneHeight, le
 			}
 			ctx.fillText(message, drawX, drawY);
 		}
+                ctx.font = "20px Comic Sans";
+                ctx.fillStyle = "black";
+                var scoreText = "Score: " + scores[sceneNum];
+                var textSize = ctx.measureText(scoreText);
+                var drawX = this.sceneDrawX + this.sceneWidth - textSize.width - 10;
+                var drawY = this.sceneDrawY + 30;
+                ctx.fillText(scoreText, drawX, drawY);
 		
 		// Draw entities
 		this.player.draw(ctx, this.sceneX, this.sceneDrawY + this.sceneHeight);
@@ -217,7 +224,7 @@ var Scene = function(sceneNum, scenePosX, scenePosY, sceneWidth, sceneHeight, le
 	};
 	
 	// Updates the game to the next state
-	this.update = function(ctx) {
+	this.update = function(ctx, scores) {
 		
 		// Check the state of the level
 	 	if (this.levelState !== "running")
@@ -226,14 +233,15 @@ var Scene = function(sceneNum, scenePosX, scenePosY, sceneWidth, sceneHeight, le
 			{
 
 			}
-			this.draw(ctx);
+			this.draw(ctx, scores);
 			return;
 		}
 		else if (this.sceneX >= level.levelLength)
 		{
 			// Level complete!
 			this.levelState = "complete";
-			this.draw(ctx);
+                        scores[sceneNum] += 100;
+			this.draw(ctx, scores);
 			return;
 		}
 		
@@ -259,7 +267,7 @@ var Scene = function(sceneNum, scenePosX, scenePosY, sceneWidth, sceneHeight, le
 		}
 		
 		// Draw everything
-		this.draw(ctx);
+		this.draw(ctx, scores);
 		
 		// Don't move the obstacles anymore.
 		//this.moveObstacles();

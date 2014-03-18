@@ -36,6 +36,12 @@ var levelComplete = false;
 // How long is the next level going to be?
 var nextLevelLength = 2000;
 
+/**
+ * The scores of the players.
+ * @type Array
+ */
+var scores = [];
+
 // End global game variables
 
 /*
@@ -50,6 +56,10 @@ function init() {
 	canvas.width = window.innerWidth;
 	canvas.height = window.innerHeight;
 	ctx = canvas.getContext('2d');
+        
+        // Initialize the scores array
+        scores[1] = 0;
+        scores[2] = 0;
 	
 	// Prepare the initial level
 	prepareNextLevel();
@@ -245,8 +255,8 @@ function update(){
 	}
 	if(state === "game"){
 		++frameCount;
-		scene1.update(ctx);
-		scene2.update(ctx);
+		scene1.update(ctx, scores);
+		scene2.update(ctx, scores);
 		
 		// Check if either player has completed the current level.
 		// If one has, make the other lose.
