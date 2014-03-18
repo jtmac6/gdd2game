@@ -228,7 +228,7 @@ function init() {
 
 function prepareNextLevel() {
 	// Initialize the level
-	currentLevel = new Level( nextLevelLength, 100, 500, 20 );
+	currentLevel = new Level( nextLevelLength, 100, 500, 50 );
 	nextLevelLength += 1000;
 
 	// Initialize the scene
@@ -289,6 +289,9 @@ function update(){
 		ctx.fillStyle = "#000000";
 		drawCenteredText("Please select an option from the list below.",  (canvas.height / 2) - 70);
 		drawMenu("play", "Play!", 0, 0, true);
+		nextLevelLength = 2000;
+		scores[1] = 0;
+		scores[2] = 0;
 	}
 	else if(state === "pause"){
 		ctx.font = "42px Comic Sans";

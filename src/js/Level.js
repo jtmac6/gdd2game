@@ -15,7 +15,7 @@ var Level = function( length, minSpace, maxSpace, maxHeight )
 		{
 			this.levelEntities[lastSpawn] = new Obstacle(
 					lastSpawn,
-					Utilities.random(0, 50),
+					Utilities.random(0, maxHeight),
 					32,
 					32,
 					'assets/BlockGreen.png',
