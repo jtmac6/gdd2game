@@ -10,7 +10,6 @@ var Level = function( length, minSpace, maxSpace, maxHeight )
 	while( lastSpawn < length )
 	{
 		lastSpawn += Math.round(( Math.random() * ( maxSpace - minSpace) ) + minSpace );
-		console.log( lastSpawn );
 		if( lastSpawn < length )
 		{
 			this.levelEntities[lastSpawn] = new Obstacle(

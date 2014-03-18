@@ -44,6 +44,10 @@ var Scene = function(sceneNum, scenePosX, scenePosY, sceneWidth, sceneHeight, le
 	// The start timestamp
 	this.startTimestamp = -1;
 	
+	//The background image
+	this.bkg = new Image();
+	this.bkg.src = 'assets/Background.png';
+	
 	/*
 	Prototyping Code
 	document.addEventListener('keydown', function(event){
@@ -93,6 +97,16 @@ var Scene = function(sceneNum, scenePosX, scenePosY, sceneWidth, sceneHeight, le
 		
 		ctx.strokeRect(this.sceneDrawX,this.sceneDrawY, this.sceneWidth, this.sceneHeight);
 		
+		var scrollVal = this.sceneX % this.sceneWidth;
+		ctx.drawImage( this.bkg, scrollVal, 0, this.sceneWidth - scrollVal, this.sceneHeight, this.sceneDrawX, this.sceneDrawY, this.sceneWidth - scrollVal, this.sceneHeight );
+		ctx.drawImage( this.bkg, 0, 0, 
+						scrollVal, 
+						this.sceneHeight, 
+						this.sceneDrawX + ( this.sceneWidth - scrollVal - 120), 
+						this.sceneDrawY, 
+						scrollVal, 
+						this.sceneHeight );
+		
 		if (this.levelState !== "running")
 		{
 			ctx.font = "20px Comic Sans";
@@ -123,15 +137,16 @@ var Scene = function(sceneNum, scenePosX, scenePosY, sceneWidth, sceneHeight, le
 			}
 			ctx.fillText(message, drawX, drawY);
 		}
-                ctx.font = "20px Comic Sans";
-                ctx.fillStyle = "black";
-                var scoreText = "Score: " + scores[sceneNum];
-                var textSize = ctx.measureText(scoreText);
-                var drawX = this.sceneDrawX + this.sceneWidth - textSize.width - 10;
-                var drawY = this.sceneDrawY + 30;
-                ctx.fillText(scoreText, drawX, drawY);
+         
+		ctx.font = "20px Comic Sans";
+         ctx.fillStyle = "black";
+         var scoreText = "Score: " + scores[sceneNum];
+         var textSize = ctx.measureText(scoreText);
+         var drawX = this.sceneDrawX + this.sceneWidth - textSize.width - 10;
+         var drawY = this.sceneDrawY + 30;
+         ctx.fillText(scoreText, drawX, drawY);
 		
-		// Draw entities
+		// Draw entities		
 		this.player.draw(ctx, this.sceneX, this.sceneDrawY + this.sceneHeight);
 		for (var i = this.sceneX; i < this.sceneX + this.sceneWidth; i++) {
 			if(this.level.levelEntities[i] !== undefined)
@@ -177,7 +192,6 @@ var Scene = function(sceneNum, scenePosX, scenePosY, sceneWidth, sceneHeight, le
 				// Stop gravity!
 				if (player.yVelocity < 0)
 				{
-					console.log("vertical collision");
 					player.yVelocity = 0;
 					player.y = entity.y + entity.height;
 				}
@@ -185,7 +199,6 @@ var Scene = function(sceneNum, scenePosX, scenePosY, sceneWidth, sceneHeight, le
 			else
 			{
 				// Stop the scene from moving
-				console.log("side collision");
 				this.sceneX -= this.speed;
 				this.player.x -= this.speed;
 			}
