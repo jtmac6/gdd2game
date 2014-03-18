@@ -97,15 +97,9 @@ var Scene = function(sceneNum, scenePosX, scenePosY, sceneWidth, sceneHeight, le
 		
 		ctx.strokeRect(this.sceneDrawX,this.sceneDrawY, this.sceneWidth, this.sceneHeight);
 		
-		var scrollVal = this.sceneX % this.sceneWidth;
+		var scrollVal = this.sceneX / 2 % this.sceneWidth;
 		ctx.drawImage( this.bkg, scrollVal, 0, this.sceneWidth - scrollVal, this.sceneHeight, this.sceneDrawX, this.sceneDrawY, this.sceneWidth - scrollVal, this.sceneHeight );
-		ctx.drawImage( this.bkg, 0, 0, 
-						scrollVal, 
-						this.sceneHeight, 
-						this.sceneDrawX + ( this.sceneWidth - scrollVal - 120), 
-						this.sceneDrawY, 
-						scrollVal, 
-						this.sceneHeight );
+		ctx.drawImage( this.bkg, 0, 0, scrollVal, this.sceneHeight, this.sceneDrawX + ( this.sceneWidth - scrollVal), this.sceneDrawY, scrollVal, this.sceneHeight );
 		
 		if (this.levelState !== "running")
 		{
@@ -194,6 +188,8 @@ var Scene = function(sceneNum, scenePosX, scenePosY, sceneWidth, sceneHeight, le
 				{
 					player.yVelocity = 0;
 					player.y = entity.y + entity.height;
+					player.isJumping = false;
+					player.isHighJumping = false;
 				}
 			}
 			else
