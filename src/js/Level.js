@@ -6,37 +6,21 @@ var Level = function( length, minSpace, maxSpace, maxHeight )
 	// The entities of the level
 	this.levelEntities = [];
 
-	var lastSpawn = 0;
+	var lastSpawn = 250;
 	while( lastSpawn < length )
 	{
-		lastSpawn += ( Math.random() * ( maxSpace - minSpace) ) + minSpace;
-
-		this.levelEntities[lastSpawn] = new Obstacle(
-				lastSpawn,
-				0,
-				32,
-				32,
-				'assets/BlockGreen.png',
-				false
-				);
-	}
-
-	for( i = 0; i < length;  )
-	{
-		if( Math.random() <
-			( Math.max( 0, i - lastSpawn - minSpace ) ) /
-			( maxSpace - minSpace ) )
+		lastSpawn += Math.round(( Math.random() * ( maxSpace - minSpace) ) + minSpace );
+		console.log( lastSpawn );
+		if( lastSpawn < length )
 		{
-			this.levelEntities[i] = new Obstacle(
-				i,
-				0,
-				32,
-				32,
-				'assets/BlockGreen.png',
-				false
-				);
-
-			lastSpawn = i;
+			this.levelEntities[lastSpawn] = new Obstacle(
+					lastSpawn,
+					0,
+					32,
+					32,
+					'assets/BlockGreen.png',
+					false
+					);
 		}
 	}
 }
