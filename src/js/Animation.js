@@ -36,4 +36,4 @@ var Animation = function(){
 	this.player2Jump[0] = new Image();
 	this.player1Jump[0].src = 'assets/Jump2-0.png';
 
-}
+};

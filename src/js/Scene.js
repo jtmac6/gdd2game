@@ -29,7 +29,7 @@ var Scene = function(sceneNum, scenePosX, scenePosY, sceneWidth, sceneHeight, le
 	this.initialPlayerX = 250;
 	
 	// The actual player object
-	this.player = new Player(this.initialPlayerX,this.sceneDrawY + this.sceneHeight - 50, this.sceneNum == 1 ? 'assets/Player1.png' : 'assets/Player2.png');
+	this.player = new Player(this.initialPlayerX,this.sceneDrawY + this.sceneHeight - 50, this.sceneNum === 1 ? 'assets/Player1.png' : 'assets/Player2.png');
 	this.player.y = 0;
 	
 	// The input buffer for key presses
@@ -60,19 +60,19 @@ var Scene = function(sceneNum, scenePosX, scenePosY, sceneWidth, sceneHeight, le
 	// Initializes the starting state of the game
 	this.init = function(){
 
-	}
+	};
 	
 	// Pushes a keyboard input to the scene's input buffer
 	this.pushInput = function(input){
 		if(input in this.inputBuffer)
 			this.inputBuffer[input] = true;
-	}
+	};
 	
 	// 
 	this.popInput = function(input){
 		if(input in this.inputBuffer)
 			this.inputBuffer[input] = false;
-	}
+	};
 	
 	// Simply informs the player which actions it should be taking
 	this.callPlayerActions = function(){
@@ -82,7 +82,7 @@ var Scene = function(sceneNum, scenePosX, scenePosY, sceneWidth, sceneHeight, le
 		if(this.inputBuffer["right"]) this.player.moveRight();
 		if(this.inputBuffer["left"]) this.player.moveLeft();
 
-	}
+	};
 	
 	// Calls the draw of each entity in the scene, and draws the scene border
 	this.draw = function(ctx){
@@ -93,30 +93,30 @@ var Scene = function(sceneNum, scenePosX, scenePosY, sceneWidth, sceneHeight, le
 		
 		ctx.strokeRect(this.sceneDrawX,this.sceneDrawY, this.sceneWidth, this.sceneHeight);
 		
-		if (this.levelState != "running")
+		if (this.levelState !== "running")
 		{
 			ctx.font = "20px Comic Sans";
 			var message = "";
 			var drawX = this.sceneDrawX + 10;
 			var drawY = this.sceneDrawY + 30;
-			if (this.levelState == "complete")
+			if (this.levelState === "complete")
 			{
 				message = "Level Complete!";
 				ctx.fillStyle = "green";
 			}
-			else if (this.levelState == "lost")
+			else if (this.levelState === "lost")
 			{
 				message = "Better luck next time...";
 				ctx.fillStyle = "red";
 			}
-			else if (this.levelState == "countdown" && this.startTimestamp != -1)
+			else if (this.levelState === "countdown" && this.startTimestamp !== -1)
 			{
 				var now = Date.now();
 				var delta = this.startTimestamp-now;
 				var seconds = Math.round(delta/1000);
 				message = "Level begins in " + seconds + "...";
 				ctx.fillStyle = "black";
-				if (seconds == 0)
+				if (seconds === 0)
 				{
 					this.levelState = "running";
 				}
@@ -132,12 +132,12 @@ var Scene = function(sceneNum, scenePosX, scenePosY, sceneWidth, sceneHeight, le
 				this.level.levelEntities[i].draw(ctx, this.sceneX, this.sceneDrawY + this.sceneHeight);
 			}
 		};
-	}
+	};
 	
 	// Cleans up objects which are no longer needed
 	this.clearArtifacts = function(){
 
-	}
+	};
 	
 	/**
 	* Resolve a collision with an entity.
@@ -183,14 +183,14 @@ var Scene = function(sceneNum, scenePosX, scenePosY, sceneWidth, sceneHeight, le
 				this.player.x -= this.speed;
 			}
 		}
-	}
+	};
 	
 	/**
 	* Respawn the player.
 	**/
 	this.respawn = function() {
 		this.player.x = this.initialPlayerX + this.sceneX;
-	}
+	};
 	
 	//checks collisions, also resolves them
 	this.checkCollisions = function() {
@@ -203,7 +203,7 @@ var Scene = function(sceneNum, scenePosX, scenePosY, sceneWidth, sceneHeight, le
 				this.resolveCollision(nextEntity);
 			}
 		};
-	}
+	};
 	
 	// Check if an entity intersects the player.
 	this.intersectsPlayer = function(entity) {
@@ -214,15 +214,15 @@ var Scene = function(sceneNum, scenePosX, scenePosY, sceneWidth, sceneHeight, le
 			this.player.y > entity.y + entity.height
 			);
 		return !noOverlap;
-	}
+	};
 	
 	// Updates the game to the next state
 	this.update = function(ctx) {
 		
 		// Check the state of the level
-	 	if (this.levelState != "running")
+	 	if (this.levelState !== "running")
 		{
-			if (this.levelState == "countdown")
+			if (this.levelState === "countdown")
 			{
 
 			}
@@ -263,5 +263,5 @@ var Scene = function(sceneNum, scenePosX, scenePosY, sceneWidth, sceneHeight, le
 		
 		// Don't move the obstacles anymore.
 		//this.moveObstacles();
-	}
-}
+	};
+};

@@ -23,4 +23,4 @@ var Level = function( length, minSpace, maxSpace, maxHeight )
 					);
 		}
 	}
-}
+};

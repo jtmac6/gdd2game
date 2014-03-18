@@ -25,11 +25,12 @@ var Player = function(xPosition, yPosition, source){
 	
 	/**
 	* Is the player dead.
-	* @return If the player is dead.
+        * @param {Number} sceneX The X offset of the scene.
+	* @return {Boolean} If the player is dead.
 	**/
 	this.isDead = function(sceneX) {
 		return this.x <= sceneX;
-	}
+	};
 
 	this.jump = function(){
 		
@@ -44,10 +45,10 @@ var Player = function(xPosition, yPosition, source){
 		var timeDif = Math.abs(this.jumpStartTime - frameCount);
 		if( this.yVelocity > 0 && timeDif < 6 && timeDif > 1)
 		{
-			if(timeDif != 0)
+			if(timeDif !== 0)
 				this.yVelocity += .6 * (8 - timeDif);
 		}
-	}
+	};
 	//causes the player to slide forward
 	this.slide = function(){
 
@@ -57,7 +58,7 @@ var Player = function(xPosition, yPosition, source){
 
 		}
 
-	}
+	};
 
 	this.moveRight = function(){
 
@@ -66,7 +67,7 @@ var Player = function(xPosition, yPosition, source){
 			this.x+=10;
 
 		}
-	}
+	};
 
 	this.moveLeft = function(){
 		if(this.x >= 20 + this.width){
@@ -74,20 +75,20 @@ var Player = function(xPosition, yPosition, source){
 			this.x-=10;
 
 		}
-	}
+	};
 
 	//causes the player to use his item
 	this.useItem = function(){
 
-	}
+	};
 	this.handleInput = function(){
 		
-	}
+	};
 	this.draw = function(ctx, xOffset, yOffset){
 		//constant color, can change
 		ctx.fillStyle = "blue";
 		//console.log( "drawing player at " + (this.x - xOffset));
 		ctx.drawImage( this.img, this.x - xOffset, yOffset - ( this.y + this.height), this.width, this.height );
 		//ctx.fillRect(this.x, this.y, this.width, this.height);
-	}
-}
+	};
+};
