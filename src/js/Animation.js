@@ -55,7 +55,7 @@ var Animation = function(runSrc, runSize, runFrames, jumpSrc, jumpSize, jumpFram
 	{
 		if( state === "running" )
 		{
-		
+			ctx.drawImage( this.runSprites, this.runSpritesOffset * currFrame % this.runSpritesFrames, height, x, y, this.runSpriteOffset, height );
 		}
 	}
 
