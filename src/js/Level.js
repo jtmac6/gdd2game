@@ -1,4 +1,4 @@
-var Level = function( length, minSpace, maxSpace, maxHeight, sceneHeight )
+var Level = function( length, minSpace, maxSpace, maxHeight )
 {
 	// The length of the level, in pixels?
 	this.levelLength = length;
@@ -7,7 +7,21 @@ var Level = function( length, minSpace, maxSpace, maxHeight, sceneHeight )
 	this.levelEntities = [];
 
 	var lastSpawn = 0;
-	for( i = 0; i < length; i++ )
+	while( lastSpawn < length )
+	{
+		lastSpawn += ( Math.random() * ( maxSpace - minSpace) ) + minSpace;
+
+		this.levelEntities[lastSpawn] = new Obstacle(
+				lastSpawn,
+				0,
+				32,
+				32,
+				'assets/BlockGreen.png',
+				false
+				);
+	}
+
+	for( i = 0; i < length;  )
 	{
 		if( Math.random() <
 			( Math.max( 0, i - lastSpawn - minSpace ) ) /
@@ -15,7 +29,7 @@ var Level = function( length, minSpace, maxSpace, maxHeight, sceneHeight )
 		{
 			this.levelEntities[i] = new Obstacle(
 				i,
-				sceneHeight-32,
+				0,
 				32,
 				32,
 				'assets/BlockGreen.png',

@@ -30,7 +30,7 @@ var Scene = function(sceneNum, scenePosX, scenePosY, sceneWidth, sceneHeight, le
 	
 	// The actual player object
 	this.player = new Player(this.initialPlayerX,this.sceneDrawY + this.sceneHeight - 50, this.sceneNum == 1 ? 'assets/Player1.png' : 'assets/Player2.png');
-	this.player.y = this.sceneDrawY + this.sceneHeight - this.player.height;
+	this.player.y = 0;
 	
 	// The input buffer for key presses
 	this.inputBuffer = {"jump": false, "item":false, "slide": false};
@@ -125,10 +125,12 @@ var Scene = function(sceneNum, scenePosX, scenePosY, sceneWidth, sceneHeight, le
 		}
 		
 		// Draw entities
-		this.player.draw(ctx, this.sceneX);
+		this.player.draw(ctx, this.sceneX, this.sceneDrawY + this.sceneHeight);
 		for (var i = this.sceneX; i < this.sceneX + this.sceneWidth; i++) {
 			if(this.level.levelEntities[i] !== undefined)
-				this.level.levelEntities[i].draw(ctx, this.sceneX, this.sceneDrawY);
+			{
+				this.level.levelEntities[i].draw(ctx, this.sceneX, this.sceneDrawY + this.sceneHeight);
+			}
 		};
 	}
 	
@@ -163,17 +165,20 @@ var Scene = function(sceneNum, scenePosX, scenePosY, sceneWidth, sceneHeight, le
 		}
 		else
 		{
-			if (player.y + player.height < entity.y + entity.height +  this.sceneDrawY)
+			if (player.y > entity.y)
 			{
 				// Stop gravity!
 				if (player.yVelocity < 0)
 				{
-					player.yVelocity = this.gravity;
+					console.log("vertical collision");
+					player.yVelocity = 0;
+					player.y = entity.y + entity.height;
 				}
 			}
 			else
 			{
 				// Stop the scene from moving
+				console.log("side collision");
 				this.sceneX -= this.speed;
 				this.player.x -= this.speed;
 			}
@@ -205,8 +210,8 @@ var Scene = function(sceneNum, scenePosX, scenePosY, sceneWidth, sceneHeight, le
 		var noOverlap = (
 			entity.x > this.player.x+this.player.width ||
 			this.player.x > entity.x+entity.width ||
-			entity.y + this.sceneDrawY > this.player.y+this.player.height ||
-			this.player.y > entity.y + this.sceneDrawY + entity.height
+			entity.y  > this.player.y+this.player.height ||
+			this.player.y > entity.y + entity.height
 			);
 		return !noOverlap;
 	}
@@ -219,7 +224,7 @@ var Scene = function(sceneNum, scenePosX, scenePosY, sceneWidth, sceneHeight, le
 		{
 			if (this.levelState == "countdown")
 			{
-				
+
 			}
 			this.draw(ctx);
 			return;
@@ -244,10 +249,10 @@ var Scene = function(sceneNum, scenePosX, scenePosY, sceneWidth, sceneHeight, le
 		
 		// Apply gravity for jumping and crap
 		this.player.yVelocity -= this.gravity;
-		this.player.y -= this.player.yVelocity;
-		if( ( this.player.y + this.player.height ) > ( this.sceneDrawY + this.sceneHeight ) )
+		this.player.y += this.player.yVelocity;
+		if( ( this.player.y ) < 0)
 		{
-			this.player.y = this.sceneDrawY + this.sceneHeight - this.player.height;
+			this.player.y = 0;
 			this.player.yVelocity = 0;
 			this.player.isJumping = false;
 			this.player.isHighJumping = false;

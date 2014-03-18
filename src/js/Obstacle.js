@@ -17,9 +17,9 @@ var Obstacle = function(xPosition, yPosition, width, height, source, breakable){
 	this.color = breakable ? "red" : "yellow";
 
 	// Draw the obstacle
-	this.draw = function(ctx, xOffset, sceneY){
+	this.draw = function(ctx, xOffset, yOffset){
 		ctx.fillStyle = this.color;
-		ctx.drawImage( this.img, this.x - xOffset, this.y + sceneY, this.width, this.height );
+		ctx.drawImage( this.img, this.x - xOffset, yOffset - ( this.y + this.height ), this.width, this.height );
 		//ctx.fillRect(this.x, this.y, this.width, this.height);
 	}
 }

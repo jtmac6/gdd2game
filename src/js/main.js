@@ -33,6 +33,9 @@ var intercepting = {};
 // Has the current level been complete.
 var levelComplete = false;
 
+// How long is the next level going to be?
+var nextLevelLength = 2000;
+
 // End global game variables
 
 /*
@@ -215,8 +218,9 @@ function init() {
 
 function prepareNextLevel() {
 	// Initialize the level
-	currentLevel = new Level( 1000, 300, 600, 20, 300 );
-	
+	currentLevel = new Level( nextLevelLength, 300, 1000, 20 );
+	nextLevelLength += 1000;
+
 	// Initialize the scene
 	//scene1 = new Scene(1,10, 10, 1800, 300, Level);
 	//scene2 = new Scene(2,10, 320, 1800, 300, Level);
