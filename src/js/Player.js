@@ -10,7 +10,7 @@ var Player = function(xPosition, yPosition, source){
 	
 	// The image of the player
 	runsrc = source.replace( ".png", "Run.png" );
-	this.animation = new Animation( 1, source, 64, runsrc, 64, 4, runsrc, 64, 4, runsrc, 64, 4 );
+	this.animation = new Animation( 2, source, 64, runsrc, 64, 4, runsrc, 64, 4, runsrc, 64, 4 );
 	this.animation.changeState( "run" );
 	
 	// The Y velocity of the player

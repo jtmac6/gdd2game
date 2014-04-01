@@ -1,7 +1,7 @@
 var Animation = function(offset, baseImage, height, runSrc, runSize, runFrames, jumpSrc, jumpSize, jumpFrames, slideSrc, slideSize, slideFrames){
 
 	this.curFrame = 0;
-	this.offSet = offset;
+	this.offset = offset;
 	this.state = "none";
 	this.height = height;
 	
@@ -39,8 +39,9 @@ var Animation = function(offset, baseImage, height, runSrc, runSize, runFrames, 
 	{
 		if( this.state === "run" )
 		{
+			//console.log( spriteOffset );
 			ctx.drawImage( this.run, 
-						  this.runSize * ( this.curFrame / this.offset ) % this.runFrames, 
+						  this.runSize * (( Math.round(this.curFrame / this.offset) ) % this.runFrames), 
 						  0,
 						  this.runSize,
 						  this.height,
@@ -52,7 +53,7 @@ var Animation = function(offset, baseImage, height, runSrc, runSize, runFrames, 
 		else if( this.state === "jump" )
 		{
 			ctx.drawImage( this.jump, 
-						  this.jumpSize * ( this.curFrame / this.offset ) % this.jumpFrames, 
+						  this.jumpSize * (( Math.round(this.curFrame / this.offset) ) % this.jumpFrames), 
 						  0,
 						  this.jumpSize,
 						  this.height,
@@ -64,7 +65,7 @@ var Animation = function(offset, baseImage, height, runSrc, runSize, runFrames, 
 		else if( this.state === "slide" )
 		{
 			ctx.drawImage( this.slide, 
-						  this.slideSize * ( this.curFrame / this.offset ) % this.slideFrames, 
+						  this.slideSize * (( Math.round(this.curFrame / this.offset) ) % this.slideFrames), 
 						  0,
 						  this.slideSize,
 						  this.height,
