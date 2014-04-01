@@ -1,61 +1,81 @@
-var Animation = function(runSrc, runSize, runFrames, jumpSrc, jumpSize, jumpFrames, slideSrc, slideSize, slideFrames){
+var Animation = function(offset, baseImage, height, runSrc, runSize, runFrames, jumpSrc, jumpSize, jumpFrames, slideSrc, slideSize, slideFrames){
 
-	this.currFrame = 0;
-	this.offSet = 2;
+	this.curFrame = 0;
+	this.offSet = offset;
+	this.state = "none";
+	this.height = height;
 	
 	//loading images into arrays for animation
-	this.player1Run = new Array();
-	this.player2Run = new Array();
-	this.player1Slide = new Array();
-	this.player2Slide = new Array();
-	this.player1Jump = new Array();
-	this.player2Jump = new Array();
+	this.base = new Image();
+	this.base.src = baseImage;
 	
-	this.runSprites = new Image();
-	this.runSprites.src = runSrc;
-	this.runSpritesOffset = runSize;
-	this.runSpritesFrames = runFrames;
+	this.run = new Image();
+	this.run.src = runSrc;
+	this.runSize = runSize;
+	this.runFrames = runFrames;
 	
-	this.player1Run[0] = new Image();
-	this.player1Run[0].src = 'assets/Run1-0.png';
-	this.player1Run[1] = new Image();
-	this.player1Run[1].src = 'assets/Run1-1.png';
-	this.player1Run[2] = new Image();
-	this.player1Run[2].src = 'assets/Run1-2.png';
+	this.jump = new Image();
+	this.jump.src = jumpSrc;
+	this.jumpSize = jumpSize;
+	this.jumpFrames = jumpFrames;
 	
-	this.player2Run[0] = new Image();
-	this.player2Run[0].src = 'assets/Run2-0.png';
-	this.player2Run[1] = new Image();
-	this.player2Run[1].src = 'assets/Run2-1.png';
-	this.player2Run[2] = new Image();
-	this.player2Run[2].src = 'assets/Run2-2.png';
+	this.slide = new Image();
+	this.slide.src = slideSrc;
+	this.slideSize = slideSize;
+	this.slideFrames = slideFrames;
 	
-	this.player1Slide[0] = new Image();
-	this.player1Slide[0].src = 'assets/Slide1-0.png';
-	this.player1Slide[1] = new Image();
-	this.player1Slide[1].src = 'assets/Slide1-1.png';
-	
-	this.player2Slide[0] = new Image();
-	this.player2Slide[0].src = 'assets/Slide2-0.png';
-	this.player2Slide[1] = new Image();
-	this.player2Slide[2].src = 'assets/Slide2-1.png';
-	
-	this.player1Jump[0] = new Image();
-	this.player1Jump[0].src = 'assets/Jump1-0.png';
-	this.player2Jump[0] = new Image();
-	this.player1Jump[0].src = 'assets/Jump2-0.png';
-	
-	this.animate = function(state)
+	this.animate = function()
 	{
-		currFrame++;
-		
+		this.curFrame++;
 	}
 	
-	this.draw = function( ctx, x, y, height, state )
+	this.changeState = function( state )
 	{
-		if( state === "running" )
+		this.state = state;
+		this.curFrame = 0;
+	}
+	
+	this.draw = function( ctx, x, y, height, width )
+	{
+		if( this.state === "run" )
 		{
-			ctx.drawImage( this.runSprites, this.runSpritesOffset * currFrame % this.runSpritesFrames, height, x, y, this.runSpriteOffset, height );
+			ctx.drawImage( this.run, 
+						  this.runSize * ( this.curFrame / this.offset ) % this.runFrames, 
+						  0,
+						  this.runSize,
+						  this.height,
+						  x, 
+						  y, 
+						  width, 
+						  height );
+		}
+		else if( this.state === "jump" )
+		{
+			ctx.drawImage( this.jump, 
+						  this.jumpSize * ( this.curFrame / this.offset ) % this.jumpFrames, 
+						  0,
+						  this.jumpSize,
+						  this.height,
+						  x, 
+						  y, 
+						  width, 
+						  height );
+		}
+		else if( this.state === "slide" )
+		{
+			ctx.drawImage( this.slide, 
+						  this.slideSize * ( this.curFrame / this.offset ) % this.slideFrames, 
+						  0,
+						  this.slideSize,
+						  this.height,
+						  x, 
+						  y, 
+						  width, 
+						  height );
+		}
+		else
+		{
+			ctx.drawImage( this.base, x, y, width, height );
 		}
 	}
 

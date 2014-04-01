@@ -9,8 +9,9 @@ var Player = function(xPosition, yPosition, source){
 	this.height = 64;
 	
 	// The image of the player
-	this.img = new Image();
-	this.img.src = source;
+	runsrc = source.replace( ".png", "Run.png" );
+	this.animation = new Animation( 1, source, 64, runsrc, 64, 4, runsrc, 64, 4, runsrc, 64, 4 );
+	this.animation.changeState( "run" );
 	
 	// The Y velocity of the player
 	this.yVelocity = 0;
@@ -88,7 +89,7 @@ var Player = function(xPosition, yPosition, source){
 		//constant color, can change
 		ctx.fillStyle = "blue";
 		//console.log( "drawing player at " + (this.x - xOffset));
-		ctx.drawImage( this.img, this.x - xOffset, yOffset - ( this.y + this.height), this.width, this.height );
+		this.animation.draw( ctx, this.x - xOffset, yOffset - ( this.y + this.height), this.height, this.width );
 		//ctx.fillRect(this.x, this.y, this.width, this.height);
 	};
 };

@@ -257,6 +257,7 @@ var Scene = function(sceneNum, scenePosX, scenePosY, sceneWidth, sceneHeight, le
 		// Scroll that stuff!
 		this.sceneX += this.speed;
 		this.player.x += this.speed;
+		this.player.animation.animate();
 		
 		// Tell the player what to do
 		this.callPlayerActions();
