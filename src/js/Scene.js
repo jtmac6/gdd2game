@@ -32,6 +32,8 @@ var Scene = function(sceneNum, scenePosX, scenePosY, sceneWidth, sceneHeight, le
 	this.player = new Player(this.initialPlayerX,this.sceneDrawY + this.sceneHeight - 50, this.sceneNum === 1 ? 'assets/Player1.png' : 'assets/Player2.png');
 	this.player.y = 0;
 	
+	this.animation = new Animation();
+	
 	// The input buffer for key presses
 	this.inputBuffer = {"jump": false, "item":false, "slide": false};
 	
@@ -140,8 +142,15 @@ var Scene = function(sceneNum, scenePosX, scenePosY, sceneWidth, sceneHeight, le
          var drawY = this.sceneDrawY + 30;
          ctx.fillText(scoreText, drawX, drawY);
 		
-		// Draw entities		
-		this.player.draw(ctx, this.sceneX, this.sceneDrawY + this.sceneHeight);
+		// Draw entities
+		var image = new Image();
+		if(this.sceneNum ==1){
+		
+			image = animation
+		
+		}
+		
+		this.player.draw(ctx, this.sceneX, this.sceneDrawY + this.sceneHeight, image);
 		for (var i = this.sceneX; i < this.sceneX + this.sceneWidth; i++) {
 			if(this.level.levelEntities[i] !== undefined)
 			{
