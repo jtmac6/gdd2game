@@ -228,7 +228,7 @@ function init() {
 
 function prepareNextLevel() {
 	// Initialize the level
-	currentLevel = new Level( nextLevelLength, 100, 500, 50 );
+	currentLevel = new Level( nextLevelLength, 40, 200, 100);
 	nextLevelLength += 1000;
 
 	// Initialize the scene
