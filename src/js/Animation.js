@@ -47,7 +47,7 @@ var Animation = function(offset, baseImage, height, runSrc, runSize, runFrames, 
 						  this.height,
 						  x, 
 						  y, 
-						  width, 
+						  64, 
 						  height );
 		}
 		else if( this.state === "jump" )
@@ -59,7 +59,7 @@ var Animation = function(offset, baseImage, height, runSrc, runSize, runFrames, 
 						  this.height,
 						  x, 
 						  y, 
-						  width, 
+						  64, 
 						  height );
 		}
 		else if( this.state === "slide" )
@@ -71,7 +71,7 @@ var Animation = function(offset, baseImage, height, runSrc, runSize, runFrames, 
 						  this.height,
 						  x, 
 						  y, 
-						  width, 
+						  64, 
 						  height );
 		}
 		else
