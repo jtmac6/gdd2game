@@ -34,7 +34,7 @@ var intercepting = {};
 var levelComplete = false;
 
 // How long is the next level going to be?
-var nextLevelLength = 2000;
+var nextLevelLength = 5000;
 
 /**
  * The scores of the players.

@@ -24,15 +24,6 @@ var Level = function( length, minSpace, maxSpace, maxHeight)
 		if(maxSpace > 64) maxSpace -= 3;
 		if(maxHeight < 250) maxHeight += 3;
 	}
-	
-	this.levelEntities[lastSpawn] = new Obstacle(
-					lastSpawn,
-					0,
-					100,
-					32,
-					'assets/finish.jpg',
-					false
-					);
 	console.log(minSpace, maxSpace, maxHeight);
 
 };
